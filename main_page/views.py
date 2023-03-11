@@ -20,3 +20,10 @@ def index(request):
 
     data = get_page_context(request)
     return render(request, 'index.html', context=data)
+
+def contacts(request):
+    if request.method == 'POST':
+        handle_post_request(request)
+
+    data = get_page_context(request)
+    return render(request, 'contact.html', context=data)

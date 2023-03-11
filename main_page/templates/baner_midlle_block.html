@@ -1,0 +1,28 @@
+{% load static %}
+
+<!-- Offer Start -->
+<div class="container-fluid pt-5 pb-3">
+    <div class="row px-xl-5">
+        <div class="col-md-6">
+            <div class="product-offer mb-30" style="height: 300px;">
+                <img class="img-fluid" src="{{ baner.image_3.url }}" onerror="this.onerror=null;this.src='{% static 'img/carousel-1.jpeg' %}';" alt="{{ baner.title }}">
+                <div class="offer-text">
+                    <h6 class="text-white text-uppercase">{{ baner.h_3 }}</h6>
+                    <h3 class="text-white mb-3">{{ baner.desc_3 }}</h3>
+                    <a href="{{ baner.tab_url_3 }}" class="btn btn-primary">{{ baner.tab_3 }}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="product-offer mb-30" style="height: 300px;">
+                <img class="img-fluid" src="{{ baner.image_4.url }}" onerror="this.onerror=null;this.src='{% static 'img/carousel-1.jpeg' %}';" alt="{{ baner.title }}">
+                <div class="offer-text">
+                    <h6 class="text-white text-uppercase">{{ baner.h_4 }}</h6>
+                    <h3 class="text-white mb-3">{{ baner.desc_4 }}</h3>
+                    <a href="{{ baner.tab_url_4 }}" class="btn btn-primary">{{ baner.tab_4 }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Offer End -->

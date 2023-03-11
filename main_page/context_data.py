@@ -4,14 +4,17 @@ Functions:
 - get_common_context: gets the common page context used across multiple pages of the site.
 - get_page_context: gets the page context with the current request taken into account.
 """
-
-# from .models import Hiro, MenuItem, Servise, Team, Testimonial, About, Contacts
+from .models import Slider, Baner, Advantages, Contacts
 
 
 def get_common_context():
     pass
     return {
-        # 'slider': Hiro.objects.get(id=1),
+        'slider': Slider.objects.filter(is_visible=True),
+        'baner': Baner.objects.get(id=1),
+        'advantages': Advantages.objects.get(id=1),
+        'contacts': Contacts.objects.get(id=1),
+
         # 'menu_brk': MenuItem.objects.filter(type__exact='BRK')[0:8],
         # 'menu_lun': MenuItem.objects.filter(type__exact='LUN')[0:8],
         # 'menu_din': MenuItem.objects.filter(type__exact='DIN')[0:8],

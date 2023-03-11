@@ -1,0 +1,56 @@
+{% load static %}
+
+<!-- Carousel Start -->
+<div class="container-fluid mb-3">
+    <div class="row px-xl-5">
+        <div class="col-lg-8">
+            <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    {% for slide in slider %}
+                        <li data-target="#header-carousel" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+                    {% endfor %}
+                </ol>
+
+                <div class="carousel-inner">
+                    {% for slide in slider %}
+                        <div class="carousel-item position-relative {% if forloop.first %}active{% endif %}" style="height: 430px;">
+                            <img class="position-absolute w-100 h-100" src="{{ slide.image.url }}" onerror="this.onerror=null;this.src='{% static 'img/carousel-1.jpeg' %}';" alt="{{ slide.title }}" style="object-fit: cover;">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">{{ slide.h_1 }}</h1>
+                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">{{ slide.desc }}</p>
+                                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="{{ slide.tab_url }}">{{ slide.tab }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-lg-4">
+
+            <div class="product-offer mb-30" style="height: 200px;">
+                <img class="img-fluid" src="{{ baner.image_1.url }}" onerror="this.onerror=null;this.src='{% static 'img/carousel-1.jpeg' %}';" alt="{{ baner.title }}">
+                <div class="offer-text">
+                    <h6 class="text-white text-uppercase">{{ baner.h_1 }}</h6>
+                    <h3 class="text-white mb-3">{{ baner.desc_1 }}</h3>
+                    <a href="{{ baner.tab_url_1 }}" class="btn btn-primary">{{ baner.tab_1 }}</a>
+                </div>
+            </div>
+
+            <div class="product-offer mb-30" style="height: 200px;">
+                <img class="img-fluid" src="{{ baner.image_2.url }}" onerror="this.onerror=null;this.src='{% static 'img/carousel-1.jpeg' %}';" alt="{{ baner.title }}">
+                <div class="offer-text">
+                    <h6 class="text-white text-uppercase">{{ baner.h_2 }}</h6>
+                    <h3 class="text-white mb-3">{{ baner.desc_2 }}</h3>
+                    <a href="{{ baner.tab_url_2 }}" class="btn btn-primary">{{ baner.tab_2 }}</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Carousel End -->
