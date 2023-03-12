@@ -6,7 +6,7 @@ Functions:
 """
 from .forms import SubscriptionForm, ContactUsForm
 from .models import Slider, Baner, Advantages, Contacts
-from shop.models import Product, RecommendedProduct
+from shop.models import Product, RecommendedProduct, Category
 
 def get_common_context():
     return {
@@ -19,7 +19,7 @@ def get_common_context():
         'last_products': Product.objects.order_by('-created')[:8],
         'products': Product.objects.filter(available=True),
         'recommended_products': RecommendedProduct.objects.all()[:8],
-
+        'category': Category.objects.all()[:12],
         # 'menu_brk': MenuItem.objects.filter(type__exact='BRK')[0:8],
         # 'menu_lun': MenuItem.objects.filter(type__exact='LUN')[0:8],
         # 'menu_din': MenuItem.objects.filter(type__exact='DIN')[0:8],
