@@ -1,7 +1,7 @@
 {% load static %}
 
 <div class="col-lg-3 d-none d-lg-block">
-    <button class="btn d-flex align-items-center justify-content-between bg-primary w-100{% if not category.0.children.exists %} d-none{% endif %}" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
+    <button class="btn d-flex align-items-center justify-content-between bg-primary w-100{% if not category.0.children.exists %} d-none{% endif %}" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;" data-toggle="collapse" aria-expanded="false">
         <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Категорії</h6>
         <i class="fa fa-angle-down text-dark"></i>
     </button>
@@ -15,11 +15,9 @@
                         {% if item.children.exists %}
                             <div class="dropdown dropright">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"></a>
-                                <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                                    {% for child in item.children.all %}
-                                        <a href="" class="dropdown-item">{{ child.name }}</a>
-                                    {% endfor %}
-                                </div>
+                                {% for child in item.children.all %}
+                                    <a href="" class="dropdown-item">{{ child.name }}</a>
+                                {% endfor %}
                             </div>
                         {% endif %}
                     </div>
