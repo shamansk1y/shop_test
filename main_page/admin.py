@@ -1,5 +1,5 @@
 from django.contrib import admin
-from main_page.models import Slider, Baner, Advantages, Contacts
+from main_page.models import Slider, Baner, Advantages, Contacts, ContactUs, Subscription
 
 
 @admin.register(Slider)
@@ -39,5 +39,17 @@ class ContactsAdmin(admin.ModelAdmin):
     list_display_links = None
 
 
+@admin.register(Subscription)
+class SubscriptionAdmin(admin.ModelAdmin):
+    model = Subscription
+    list_editable = ['email', 'is_processed']
+    list_display = ['email', 'date', 'date_processing', 'is_processed']
+    list_display_links = None
 
 
+@admin.register(ContactUs)
+class ContactUsAdmin(admin.ModelAdmin):
+    model = ContactUs
+    list_editable = ['name', 'email', 'subject', 'message', 'is_processed']
+    list_display = ['name', 'email', 'subject', 'message', 'date', 'date_processing', 'is_processed']
+    list_display_links = None

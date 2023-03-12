@@ -93,3 +93,37 @@ class Contacts(models.Model):
     class Meta:
         ordering = ('address',)
         verbose_name_plural = 'Контакти'
+
+
+class Subscription(models.Model):
+
+    email = models.EmailField()
+    date = models.DateField(auto_now_add=True )
+    date_processing = models.DateField(auto_now=True )
+    is_processed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.date}: {self.email}'
+
+    class Meta:
+        ordering = ('-date',)
+        verbose_name_plural = 'Підписка на email розсилку'
+
+
+class ContactUs(models.Model):
+
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+    message = models.TextField(max_length=250, blank=True)
+    subject = models.CharField(max_length=50)
+
+    date = models.DateField(auto_now_add=True )
+    date_processing = models.DateField(auto_now=True )
+    is_processed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.name}: {self.email}'
+
+    class Meta:
+        ordering = ('-date',)
+        verbose_name_plural = "Зворотній зв'язок"

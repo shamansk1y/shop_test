@@ -4,6 +4,7 @@ Functions:
 - get_common_context: gets the common page context used across multiple pages of the site.
 - get_page_context: gets the page context with the current request taken into account.
 """
+from .forms import SubscriptionForm, ContactUsForm
 from .models import Slider, Baner, Advantages, Contacts
 
 
@@ -14,18 +15,16 @@ def get_common_context():
         'baner': Baner.objects.get(id=1),
         'advantages': Advantages.objects.get(id=1),
         'contacts': Contacts.objects.get(id=1),
+        'subscription': SubscriptionForm(),
+        'contact_us': ContactUsForm(),
 
         # 'menu_brk': MenuItem.objects.filter(type__exact='BRK')[0:8],
         # 'menu_lun': MenuItem.objects.filter(type__exact='LUN')[0:8],
         # 'menu_din': MenuItem.objects.filter(type__exact='DIN')[0:8],
         # 'servise': Servise.objects.get(id=1),
         # 'team': Team.objects.all().order_by('?')[:6],
-        # 'testimonial': Testimonial.objects.filter(is_visible=True),
         # 'about': About.objects.get(id=1),
-        # 'contacts': Contacts.objects.get(id=1),
-        # 'contact_us': ContactUsForm(),
-        # 'fast_booking': FastBookingForm(),
-        # 'subscription': SubscriptionForm(),
+
 
     }
 
