@@ -16,11 +16,37 @@ class RecommendedProduct(admin.ModelAdmin):
     list_filter = ['position']
 
 
+class SubcategoryInline(admin.TabularInline):
+    model = Category
+    fields = ['name', 'slug', 'position', 'is_visible']
+    extra = 0
+    verbose_name_plural = 'Підкатегорії'
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'photo', 'position', 'is_visible', 'parent']
-    list_filter = ['name', 'slug', 'photo', 'position', 'is_visible', 'parent']
-    list_editable = ['slug', 'photo', 'position', 'is_visible', 'parent']
+    list_display = ['name', 'slug', 'position', 'is_visible', 'parent_name']
+    list_editable = ['slug', 'position', 'is_visible']
     prepopulated_fields = {'slug': ('name',)}
+    raw_id_fields = ['parent']
+    inlines = [SubcategoryInline]
+
+    def parent_name(self, obj):
+        if obj.parent:
+            return obj.parent.name
+        return ''
+    parent_name.short_description = 'Материнська категорія'
+    parent_name.admin_order_field = 'parent__name'
+
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        qs = qs.filter(parent__isnull=True)
+        return qs
+
+
+
+
+
 
 
