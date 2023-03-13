@@ -1,33 +1,24 @@
-const navbarVertical = document.getElementById('navbar-vertical');
-const navbarHorizontal = document.getElementById('navbar-horizontal');
-const btnToggleVertical = document.querySelector('[href="#navbar-vertical"]');
-const btnToggleHorizontal = document.querySelector('[href="#navbar-horizontal"]');
-const dropdownItems = document.querySelectorAll('.dropdown-item');
+$(document).ready(function() {
+  // Отображение и скрытие вертикального меню при нажатии на кнопку
+  $('[data-toggle="collapse"]').on('click', function() {
+    $(this).toggleClass('active');
+    $($(this).attr('href')).toggleClass('show');
+    $('body').toggleClass('overflow-hidden');
+  });
 
-btnToggleVertical.addEventListener('click', function() {
-  if (navbarVertical.classList.contains('show')) {
-    navbarVertical.classList.remove('show');
-  } else {
-    navbarVertical.classList.add('show');
-    navbarHorizontal.classList.remove('show');
-  }
-});
+  // Отображение горизонтального выпадающего меню при наведении на элемент
+  $('.dropdown').on('mouseenter', function() {
+    if($(window).width() > 768) {
+      $(this).addClass('show');
+      $(this).find('.dropdown-menu').addClass('show');
+    }
+  });
 
-btnToggleHorizontal.addEventListener('click', function(event) {
-  event.preventDefault(); // отменяем стандартное поведение ссылки
-  if (navbarHorizontal.classList.contains('show')) {
-    navbarHorizontal.classList.remove('show');
-  } else {
-    navbarHorizontal.classList.add('show');
-    navbarVertical.classList.remove('show');
-  }
-});
-
-const btnToggleDropdowns = document.querySelectorAll('.navbar-vertical .dropdown-toggle');
-btnToggleDropdowns.forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    if (navbarVertical.classList.contains('show')) {
-      navbarVertical.classList.remove('show');
+  // Скрытие горизонтального выпадающего меню при уходе курсора с элемента
+  $('.dropdown').on('mouseleave', function() {
+    if($(window).width() > 768) {
+      $(this).removeClass('show');
+      $(this).find('.dropdown-menu').removeClass('show');
     }
   });
 });
