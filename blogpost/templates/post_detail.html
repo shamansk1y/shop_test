@@ -1,22 +1,42 @@
 {% extends 'main.html' %}
 
+
+
 {% block content %}
-  <h1>{{ post.title }}</h1>
-  {% if post.image %}
-    <img src="{{ post.image.url }}" alt="{{ post.title }}" />
-  {% endif %}
-  <p>Published on {{ post.pub_date|date:"F j, Y" }}</p>
-  <div>
-    {{ post.content|safe }}
-  </div>
-  <h2>Related products:</h2>
-  {% if post.products.all %}
-    <ul>
-      {% for product in post.products.all %}
-        <li><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No related products.</p>
-  {% endif %}
+
+    <!-- Breadcrumb Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <div class="col-12">
+                <nav class="breadcrumb bg-light mb-30">
+                    <a class="breadcrumb-item text-dark" href="{% url 'main_page:index' %}">Home</a>
+                    <a class="breadcrumb-item text-dark" href="{% url 'blogpost:blog_post_list' %}">Блог</a>
+                    <span class="breadcrumb-item active">{{ post.title }}</span>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <h1>{{ post.title }}</h1>
+
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }}"/>
+        {% endif %}
+        <p>Published on {{ post.pub_date|date:"F j, Y" }}</p>
+        <div>
+            {{ post.content|safe }}
+        </div>
+
+
+    <h2>Товари, які можуть Вас зацікавити:</h2>
+    {% if post.products.all %}
+        <ul>
+            {% for product in post.products.all %}
+                <li><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No related products.</p>
+    {% endif %}
 {% endblock %}

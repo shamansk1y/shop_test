@@ -1,16 +1,48 @@
 {% extends 'main.html' %}
+{% load static %}
 
 {% block content %}
-  <h1>Blog</h1>
-  {% for post in posts %}
-    <div>
-      {% if post.image %}
-        <img src="{{ post.image.url }}" alt="{{ post.title }}" />
-      {% endif %}
-      <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-      <p>{{ post.content|safe|truncatewords:50 }}</p>
+
+    <!-- Breadcrumb Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <div class="col-12">
+                <nav class="breadcrumb bg-light mb-30">
+                    <a class="breadcrumb-item text-dark" href="{% url 'main_page:index' %}">Home</a>
+                    <span class="breadcrumb-item active">Блог</span>
+                </nav>
+            </div>
+        </div>
     </div>
-  {% empty %}
-    <p>No posts yet.</p>
-  {% endfor %}
+    <!-- Breadcrumb End -->
+
+    <!-- Blog list Start -->
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Блог</span></h2>
+
+    <div class="row px-xl-5">
+        {% for post in posts %}
+            <div class="col-md-6">
+                <div class="product-offer mb-30" style="height: 300px;">
+                    <img class="img-fluid" src="{{ post.image.url }}" onerror="this.onerror=null;this.src='{% static 'img/carousel-1.jpeg' %}';" alt="{{ post.title }}">
+                    <div class="offer-text">
+                        <h6 class="text-white text-uppercase">{{ post.title }}</h6>
+                        <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Читати статтю</a>
+                    </div>
+                </div>
+                <p>Дата публікації: {{ post.pub_date|date:"j.m.Y" }}</p>
+                <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                <p>{{ post.content|safe|truncatewords:30 }} <a href="{{ post.get_absolute_url }}">Читати повністю</a></p>
+
+
+
+            </div>
+        {% empty %}
+            <p>No posts yet.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Blog list End -->
+
+    {% include 'recommended_products.html' %}
+
 {% endblock %}
