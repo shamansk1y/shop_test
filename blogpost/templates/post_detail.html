@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <h1>{{ post.title }}</h1>
+  {% if post.image %}
+    <img src="{{ post.image.url }}" alt="{{ post.title }}" />
+  {% endif %}
+  <p>Published on {{ post.pub_date|date:"F j, Y" }}</p>
+  <div>
+    {{ post.content|safe }}
+  </div>
+  <h2>Related products:</h2>
+  {% if post.products.all %}
+    <ul>
+      {% for product in post.products.all %}
+        <li><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No related products.</p>
+  {% endif %}
+{% endblock %}

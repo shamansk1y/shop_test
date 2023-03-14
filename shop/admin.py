@@ -8,6 +8,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['available', 'created', 'updated']
     list_editable = ['description', 'price', 'available']
     prepopulated_fields = {'slug': ('name',)}
+    search_fields = ('name',)
 
 
 @admin.register(RecommendedProduct)

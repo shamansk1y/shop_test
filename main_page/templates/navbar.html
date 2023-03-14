@@ -7,7 +7,7 @@
         <div class="col-lg-9">
             <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
                 <a href="{% url 'main_page:index' %}" class="text-decoration-none d-block d-lg-none">
-                    <span class="h1 text-uppercase text-dark bg-light px-2">Multi</span>
+                    <span class="h1 text-uppercase text-dark bg-light px-2">Joma</span>
                     <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
                 </a>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -22,7 +22,7 @@
                         <a href="" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Розмірна таблиця</a>
                         <a href="" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Друк на формі</a>
                         <a href="" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Відгуки</a>
-                        <a href="" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Блог</a>
+                        <a href="{% url 'blogpost:blog_post_list' %}" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Блог</a>
                         <a href="{% url 'main_page:contacts' %}" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Контакти</a>
 
                     </div>

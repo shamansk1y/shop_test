@@ -4,6 +4,8 @@ Functions:
 - get_common_context: gets the common page context used across multiple pages of the site.
 - get_page_context: gets the page context with the current request taken into account.
 """
+
+
 from .forms import SubscriptionForm, ContactUsForm
 from .models import Slider, Baner, Advantages, Contacts
 from shop.models import Product, RecommendedProduct, Category
@@ -20,6 +22,7 @@ def get_common_context():
         'products': Product.objects.filter(available=True),
         'recommended_products': RecommendedProduct.objects.all()[:8],
         'category': Category.objects.filter(parent=None),
+
 
         # 'menu_brk': MenuItem.objects.filter(type__exact='BRK')[0:8],
         # 'menu_lun': MenuItem.objects.filter(type__exact='LUN')[0:8],
