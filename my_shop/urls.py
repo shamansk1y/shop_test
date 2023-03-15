@@ -17,8 +17,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
-
-
+from info_page.views import info_page
 
 urlpatterns = [
     path('', include('main_page.urls')),
@@ -27,6 +26,7 @@ urlpatterns = [
     path('orders/', include('orders.urls', namespace='orders')),
     path('shop/', include('shop.urls', namespace='shop')),
     path('blog/', include('blogpost.urls', namespace='blog')),
+    path('<slug:slug>/', info_page, name='info_page'),
 ]
 
 if settings.DEBUG:

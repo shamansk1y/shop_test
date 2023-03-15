@@ -7,7 +7,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     is_visible = models.BooleanField(default=True)
-    image = models.ImageField(upload_to='blog/%Y/%m/%d/', null=True, blank=True)
+    image = models.ImageField(upload_to='blog/%Y/%m/', null=True, blank=True)
     position = models.IntegerField(default=0)
     content = RichTextField()
     meta_title = models.CharField(max_length=255, null=True, blank=True)
