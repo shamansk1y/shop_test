@@ -1,19 +1,19 @@
 {% extends 'main.html' %}
 {% load static %}
 
-{% block title %}Your shopping cart{% endblock %}
+{% block title %}Ваше замовлення{% endblock %}
 
 {% block content %}
     <h1>Your shopping cart</h1>
     <table class="cart">
         <thead>
             <tr>
-                <th>Image</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Remove</th>
-                <th>Unit price</th>
-                <th>Price</th>
+                <th>Зображення</th>
+                <th>Товар</th>
+                <th>Кількість</th>
+                <th>Видалити</th>
+                <th>Ціна за одиницю</th>
+                <th>Разом</th>
             </tr>
         </thead>
         <tbody>
@@ -32,7 +32,7 @@
                             {{ item.quantity }}
                         </td>
                         <td>
-                            <a href="{% url "cart:cart_remove" product.id %}">Remove</a>
+                            <a href="{% url "cart:cart_remove" product.id %}">Видалити</a>
                         </td>
                         <td class="num">
                             ${{ item.price }}
@@ -45,7 +45,7 @@
             {% endfor %}
             <tr class="total">
                 <td>
-                    Total
+                    Загальна сума замовлення
                 </td>
                 <td colspan="4">
                 </td>
@@ -56,9 +56,9 @@
         </tbody>
     </table>
     <p class="text-right">
-        <a href="{% url "shop:product_list" %}" class="button light">Continue shopping</a>
+        <a href="{% url "shop:product_list" %}" class="button light">Продовжити покупки</a>
         <a href="{% url "orders:order_create" %}" class="button">
-            Checkout
+            Оформити замовлення
         </a>
     </p>
 {% endblock %}

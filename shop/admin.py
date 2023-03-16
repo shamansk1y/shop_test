@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, RecommendedProduct, Category
+from .models import Product, RecommendedProduct, Category, Manufacturer
 
 
 @admin.register(Product)
@@ -46,8 +46,9 @@ class CategoryAdmin(admin.ModelAdmin):
         return qs
 
 
-
-
-
+@admin.register(Manufacturer)
+class ManufacturerAdmin(admin.ModelAdmin):
+    model = Manufacturer
+    prepopulated_fields = {'slug': ('title',)}
 
 

@@ -8,7 +8,7 @@ Functions:
 
 from .forms import SubscriptionForm, ContactUsForm
 from .models import Slider, Baner, Advantages, Contacts
-from shop.models import Product, RecommendedProduct, Category
+from shop.models import Product, RecommendedProduct, Category, Manufacturer
 
 def get_common_context():
     return {
@@ -22,6 +22,7 @@ def get_common_context():
         'products': Product.objects.filter(available=True),
         'recommended_products': RecommendedProduct.objects.all()[:8],
         'category': Category.objects.filter(parent=None),
+        'manufacturer': Manufacturer.objects.all(),
 
 
         # 'menu_brk': MenuItem.objects.filter(type__exact='BRK')[0:8],
