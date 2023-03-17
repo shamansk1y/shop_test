@@ -10,15 +10,14 @@
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
                     <a class="breadcrumb-item text-dark" href="{% url 'main_page:index' %}">Головна</a>
-                    <a class="breadcrumb-item text-dark" href="{% url 'main_page:category_list' %}">Список категорій</a>
-                    <span class="breadcrumb-item active">Список під категорій</span>
+                    <span class="breadcrumb-item active">Список категорій</span>
                 </nav>
             </div>
         </div>
     </div>
    <!-- Breadcrumb End -->
 
-
+    {% include 'categories.html' %}
 
     {% include 'recommended_products.html' %}
 

@@ -32,6 +32,14 @@ def contacts(request):
     return render(request, 'contact.html', context=data)
 
 
+def category_list(request):
+    if request.method == 'POST':
+        handle_post_request(request)
+
+    data = get_page_context(request)
+    return render(request, 'category_list.html', context=data)
+
+
 def sub_category_list(request):
     if request.method == 'POST':
         handle_post_request(request)

@@ -30,6 +30,16 @@ class Cart:
             self.cart[product_id]['quantity'] += quantity
         self.save()
 
+
+    def sub(self, product):
+        product_id = str(product.id)
+        print('test')
+        if product_id in self.cart:
+            self.cart[product_id]['quantity'] -= 1
+            if self.cart[product_id]['quantity'] <= 0:
+                del self.cart[product_id]
+            self.save()
+
     def save(self):
         # mark the session as "modified" to make sure it gets saved
         self.session.modified = True
@@ -50,6 +60,7 @@ class Cart:
         # remove cart from session
         del self.session[settings.CART_SESSION_ID]
         self.save()
+
 
     def __iter__(self):
         """

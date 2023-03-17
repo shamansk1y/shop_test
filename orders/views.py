@@ -1,9 +1,9 @@
 from django.shortcuts import render
-
 from cart.cart import Cart
-
+from main_page.context_data import get_common_context
 from .forms import OrderCreateForm
 from .models import OrderItem
+
 
 def order_create(request):
     cart = Cart(request)
@@ -16,7 +16,13 @@ def order_create(request):
             
             # clear the cart
             cart.clear()
-            return render(request, 'created.html', {'order': order})
+            data = {'order': order}
+            context_data = get_common_context()
+            data.update(context_data)
+            return render(request, 'created.html', context=data)
     else:
         form = OrderCreateForm()
-    return render(request, 'create.html', {'cart': cart, 'form': form})
+    data = {'cart': cart, 'form': form}
+    context_data = get_common_context()
+    data.update(context_data)
+    return render(request, 'create.html', context=data)
