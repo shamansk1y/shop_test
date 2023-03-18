@@ -16,7 +16,7 @@
                             <div class="dropdown dropright">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"></a>
                                 {% for child in item.children.all %}
-                                    <a href="" class="dropdown-item">{{ child.name }}</a>
+                                    <a onclick="location.href='{{ child.get_absolute_url }}'" class="dropdown-item">{{ child.name }}</a>
                                 {% endfor %}
                             </div>
                         </div>
