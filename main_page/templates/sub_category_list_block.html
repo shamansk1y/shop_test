@@ -3,7 +3,7 @@
 <div class="row px-xl-5 pb-3">
     {% for item in child %}
         <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-            <a class="text-decoration-none" onclick="location.href='{{ item.child.get_absolute_url }}'">
+            <a class="text-decoration-none" onclick="location.href='{{ item.get_absolute_url }}'">
                 <div class="cat-item d-flex align-items-center mb-4">
                     <div class="overflow-hidden" style="width: 100px; height: 100px;">
                         <img class="img-fluid w-100" src="{{ item.photo.url }}" onerror="this.onerror=null;this.src='{% static 'img/parche-bordado-joma-85cm-x-25cm.jpg' %}';" alt="{{ item.name }}">

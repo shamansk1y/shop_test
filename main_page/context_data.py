@@ -23,16 +23,6 @@ def get_common_context():
         'recommended_products': RecommendedProduct.objects.all()[:8],
         'category': Category.objects.filter(parent=None),
         'manufacturer': Manufacturer.objects.all(),
-
-
-        # 'menu_brk': MenuItem.objects.filter(type__exact='BRK')[0:8],
-        # 'menu_lun': MenuItem.objects.filter(type__exact='LUN')[0:8],
-        # 'menu_din': MenuItem.objects.filter(type__exact='DIN')[0:8],
-        # 'servise': Servise.objects.get(id=1),
-        # 'team': Team.objects.all().order_by('?')[:6],
-        # 'about': About.objects.get(id=1),
-
-
     }
 
 

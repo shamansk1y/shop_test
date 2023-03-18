@@ -4,6 +4,25 @@
 
 {% block content %}
 
+    <!-- Products Start -->
+
+      <h1>{{ cat.name }}</h1>
+  <p>{{ cat.description }}</p>
+
+  <h2>Товары</h2>
+  {% if products %}
+    <ul>
+    {% for product in cat_products %}
+      <li>{{ product.name }} - {{ product.price }} грн</li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>Нет товаров в данной категории.</p>
+  {% endif %}
+
+    <!-- Products End -->
+
+
     {% include 'recommended_products.html' %}
 
 {% endblock %}

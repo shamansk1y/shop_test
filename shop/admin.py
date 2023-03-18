@@ -2,6 +2,11 @@ from django.contrib import admin
 from .models import Product, RecommendedProduct, Category, Manufacturer
 
 
+class SubProdAdmin(admin.TabularInline):
+    model = Product
+    raw_id_fields = ['category']
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'price', 'available', 'description', 'created', 'updated']
@@ -20,14 +25,15 @@ class RecommendedProduct(admin.ModelAdmin):
 class SubcategoryInline(admin.TabularInline):
     model = Category
     fields = ['name', 'slug', 'position', 'is_visible']
+    list_display_links = ['name']
     extra = 0
     verbose_name_plural = 'Підкатегорії'
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'position', 'is_visible', 'parent_name']
-    list_editable = ['slug', 'position', 'is_visible']
+    list_display = ['name','position', 'is_visible']
+    list_editable = ['position', 'is_visible']
     prepopulated_fields = {'slug': ('name',)}
     raw_id_fields = ['parent']
     inlines = [SubcategoryInline]
@@ -38,6 +44,10 @@ class CategoryAdmin(admin.ModelAdmin):
         return ''
     parent_name.short_description = 'Материнська категорія'
     parent_name.admin_order_field = 'parent__name'
+
+    def product_count(self, obj):
+        return obj.product_set.count()
+    product_count.short_description = 'Товарів'
 
 
     def get_queryset(self, request):

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from main_page.context_data import get_page_context
+from main_page.context_data import get_page_context, get_common_context
 from main_page.forms import ContactUsForm, SubscriptionForm
-from shop.models import Category
+from shop.models import Category, Product
 
 
 def handle_post_request(request):
@@ -44,8 +44,16 @@ def category_list(request):
 def sub_category_list(request, slug):
     cat = get_object_or_404(Category, slug=slug)
     child = cat.children.all()
-    context = {
+    cat_products = Product.objects.filter(category=cat)  # фильтруем товары по категории
+    data = {
         'cat': cat,
         'child': child,
+        'cat_products': cat_products,  # передаем отфильтрованные товары в шаблон
     }
-    return render(request, 'sub_category_list.html', context)
+    context_data = get_common_context()
+    data.update(context_data)
+    if cat.is_parent():
+        return render(request, 'sub_category_list.html', context=data)
+    else:
+        return render(request, 'sub_category_product_list.html', context=data)
+
