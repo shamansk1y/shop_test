@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404, render
-
 from cart.cart import Cart
 from main_page.context_data import get_common_context
 from .models import Product
@@ -25,4 +24,5 @@ def product_detail(request, id, slug):
     context_data = get_common_context()
     data.update(context_data)
     return render(request, 'detail.html', context=data)
+
 

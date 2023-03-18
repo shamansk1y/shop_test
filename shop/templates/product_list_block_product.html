@@ -32,11 +32,11 @@
         </div>
 
         {% for product in products %}
-            <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+            <div class="col-lg-3 col-md-6 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
                         <a href="{{ product.get_absolute_url }}">
-                            <img class="img-fluid h-100" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/product.png" %}{% endif %}">
+                            <img class="img-fluid w-100 product-img" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/product.png" %}{% endif %}">
                         </a>
                         <div class="product-action">
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
@@ -74,3 +74,6 @@
     </div>
 </div>
 <!-- Shop Product End -->
+
+
+
