@@ -9,9 +9,9 @@ class SubProdAdmin(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'price', 'available', 'description', 'created', 'updated']
+    list_display = ['name', 'image', 'price', 'available', 'description', 'created', 'updated']
     list_filter = ['available', 'created', 'updated']
-    list_editable = ['description', 'price', 'available']
+    list_editable = ['image', 'description', 'price', 'available']
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name',)
 

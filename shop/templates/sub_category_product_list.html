@@ -10,6 +10,7 @@
                 <nav class="breadcrumb bg-light mb-30">
                     <a class="breadcrumb-item text-dark" href="{% url 'main_page:index' %}">Головна</a>
                     <a class="breadcrumb-item text-dark" href="{% url 'shop:product_list' %}">Всі товари в магазині</a>
+                    <a class="breadcrumb-item text-dark" href="{% url 'main_page:category_list' %}">Основні категорії</a>
                     <span class="breadcrumb-item active">Список товарів категорії - {{ cat.name }}</span>
                 </nav>
             </div>

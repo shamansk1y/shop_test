@@ -1,8 +1,12 @@
+import os
+from io import BytesIO
 from ckeditor.fields import RichTextField
+from django.core.files.base import ContentFile
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from main_page.utils import get_file_name
+from PIL import Image
 
 
 class Category(models.Model):
@@ -75,11 +79,40 @@ class Product(models.Model):
         index_together = (('id', 'slug'),)
         verbose_name_plural = 'Товари'
 
+    def get_absolute_url(self):
+        return reverse("shop:product_detail", args=[self.id, self.slug])
+
+    def save(self, *args, **kwargs):
+        # проверяем, есть ли изображение
+        if self.image:
+            # открываем изображение с помощью библиотеки PIL
+            img = Image.open(self.image)
+
+            # проверяем, является ли изображение квадратным
+            if img.width != img.height:
+                size = (max(img.width, img.height), max(img.width, img.height))
+                img_with_border = Image.new("RGB", size, (245, 245, 245))
+                x = (size[0] - img.width) // 2
+                y = (size[1] - img.height) // 2
+                img_with_border.paste(img, (x, y))
+
+                # получаем формат изображения из имени файла
+                file_ext = os.path.splitext(self.image.name)[1].lower()
+                format_dict = {'.jpg': 'JPEG', '.jpeg': 'JPEG', '.png': 'PNG', '.gif': 'GIF'}
+                image_format = format_dict.get(file_ext, 'JPEG')
+
+                # сохраняем квадратное изображение в том же формате, что и оригинал
+                img_io = BytesIO()
+                img_with_border.save(img_io, format=image_format)
+                img_io.seek(0)
+                self.image.save(self.image.name, ContentFile(img_io.read()), save=False)
+
+        super(Product, self).save(*args, **kwargs)
+
+
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse("shop:product_detail", args=[self.id, self.slug])
 
 
 class RecommendedProduct(models.Model):

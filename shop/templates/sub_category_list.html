@@ -10,8 +10,8 @@
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
                     <a class="breadcrumb-item text-dark" href="{% url 'main_page:index' %}">Головна</a>
-                    <a class="breadcrumb-item text-dark" href="{% url 'main_page:category_list' %}">Список категорій</a>
-                    <span class="breadcrumb-item active"> - Список підкатегорій</span>
+                    <a class="breadcrumb-item text-dark" href="{% url 'main_page:category_list' %}">Основні категорії</a>
+                    <span class="breadcrumb-item active">{{ cat.name }} - список підкатегорій</span>
                 </nav>
             </div>
         </div>
