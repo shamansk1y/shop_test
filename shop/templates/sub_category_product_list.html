@@ -9,7 +9,8 @@
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
                     <a class="breadcrumb-item text-dark" href="{% url 'main_page:index' %}">Головна</a>
-                    <span class="breadcrumb-item active">Всі товари в магазині</span>
+                    <a class="breadcrumb-item text-dark" href="{% url 'shop:product_list' %}">Всі товари в магазині</a>
+                    <span class="breadcrumb-item active">Список товарів категорії - {{ cat.name }}</span>
                 </nav>
             </div>
         </div>
@@ -32,7 +33,7 @@
             </div>
             <!-- Shop Sidebar End -->
 
-            {% include 'product_list_block_product.html' %}
+            {% include 'sub_cat_product.html' %}
 
         </div>
     </div>
