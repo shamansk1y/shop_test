@@ -2,16 +2,11 @@ from django.contrib import admin
 from .models import Product, RecommendedProduct, Category, Manufacturer
 
 
-class SubProdAdmin(admin.TabularInline):
-    model = Product
-    raw_id_fields = ['category']
-
-
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'image', 'price', 'available', 'description', 'created', 'updated']
-    list_filter = ['available', 'created', 'updated']
-    list_editable = ['image', 'description', 'price', 'available']
+    list_display = ['name', 'image', 'price', 'available', 'manufacturer', 'category', 'status']
+    list_filter = ['available', 'manufacturer', 'category', 'characteristics_gender', 'status', 'created', 'updated']
+    list_editable = ['image', 'price', 'available']
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name',)
 
@@ -22,9 +17,9 @@ class RecommendedProduct(admin.ModelAdmin):
     list_filter = ['position']
 
 
-class SubcategoryInline(admin.TabularInline):
+
+class SubcategoryInline(admin.StackedInline):
     model = Category
-    fields = ['name', 'slug', 'position', 'is_visible']
     list_display_links = ['name']
     extra = 0
     verbose_name_plural = 'Підкатегорії'
@@ -60,5 +55,3 @@ class CategoryAdmin(admin.ModelAdmin):
 class ManufacturerAdmin(admin.ModelAdmin):
     model = Manufacturer
     prepopulated_fields = {'slug': ('title',)}
-
-

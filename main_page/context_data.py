@@ -4,8 +4,7 @@ Functions:
 - get_common_context: gets the common page context used across multiple pages of the site.
 - get_page_context: gets the page context with the current request taken into account.
 """
-
-
+from django.db.models import Count
 from .forms import SubscriptionForm, ContactUsForm
 from .models import Slider, Baner, Advantages, Contacts
 from shop.models import Product, RecommendedProduct, Category, Manufacturer
@@ -23,6 +22,7 @@ def get_common_context():
         'recommended_products': RecommendedProduct.objects.all()[:8],
         'category': Category.objects.filter(parent=None),
         'manufacturer': Manufacturer.objects.all(),
+        # 'manufacturers': Manufacturer.objects.annotate(num_products=Count('product')).order_by('title'),
     }
 
 

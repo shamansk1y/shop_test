@@ -73,6 +73,22 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_NULL, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    GENDER_CHOICES = [
+        ('Ч', 'Чоловічий'),
+        ('Ж', 'Жіночий'),
+        ('Д', 'Дитячий'),
+        ('П', 'Підлітковий'),
+        ('У', 'Унісекс'),
+        ]
+    characteristics_gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, default=True)
+    STASTUS_CHOICES = [
+        ('Н', 'Немає в наявності'),
+        ('В', 'В наявності'),
+        ('П', 'Під замовлення 2-3 дні'),
+        ('З', 'Під замовлення 2-4 тижні'),
+        ('C', 'Скоро в наявності'),
+        ]
+    status = models.CharField(max_length=1, choices=STASTUS_CHOICES, blank=True, default='Н')
 
     class Meta:
         ordering = ('-created',)
