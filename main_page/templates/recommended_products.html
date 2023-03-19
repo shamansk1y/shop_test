@@ -4,34 +4,34 @@
 <div class="container-fluid pt-5 pb-3">
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Рекомендовані товари</span></h2>
     <div class="row px-xl-5">
+
         {% for item in recommended_products %}
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+
+            <div class="col-lg-3 col-md-6 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="{{ item.product.image.url }}" onerror="this.onerror=null;this.src='{% static 'img/product-1.jpeg' %}';" alt="{{ item.name }}">
+                        <a href="{{ item.product.image.url }}">
+                            <img class="img-fluid w-100 product-img" src="{% if item.product.image %}{{ item.product.image.url}}{% else %}{% static "img/product.png" %}{% endif %}">
+                        </a>
                         <div class="product-action">
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href="{{ item.product.get_absolute_url }}"><i class="fa fa-search"></i></a>
                         </div>
                     </div>
                     <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">{{ item.product.name }}</a>
+                        <a class="h6 text-decoration-none product-name" href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>{{ item.product.price }} UAH</h5><h6 class="text-muted ml-2"><del>{{ item.product.price }} UAH</del></h6>
+                            <h5>{{ item.product.price }} UAH</h5><h6 class="text-muted ml-2"><del>стара ціна</del></h6>
                         </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
+                        <div class="d-flex justify-content-start mt-2">
+                            <button class="btn btn-warning mr-2" onclick="location.href='{{ item.product.get_absolute_url }}'">Переглянути товар</button>
+                            <button class="btn btn-secondary" onclick="location.href='{% url "cart:cart_add" item.product.id %}'">Додати до кошика</button>
                         </div>
                     </div>
                 </div>
             </div>
+
         {% endfor %}
 
 
