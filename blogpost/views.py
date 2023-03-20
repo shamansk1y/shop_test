@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from blogpost.models import Blog
 from main_page.context_data import get_common_context
@@ -6,8 +7,12 @@ from main_page.context_data import get_common_context
 def blog_post_list(request):
 
     posts = Blog.objects.filter(is_visible=True).order_by('-pub_date')
+    paginator = Paginator(posts, 12)  # разбиваем на страницы по 8 товаров на странице
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     data = {
-        'posts': posts
+        'posts': posts,
+        'page_obj': page_obj,
     }
     context_data = get_common_context()
     data.update(context_data)
