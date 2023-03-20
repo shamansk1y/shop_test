@@ -41,6 +41,17 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+class SubCategory(Category):
+    class Meta:
+        proxy = True
+        verbose_name = 'Підкатегорія'
+        verbose_name_plural = 'Підкатегорії'
+
+    def save(self, *args, **kwargs):
+        if self.parent is None:
+            raise ValueError('SubCategory must have a parent')
+        super(SubCategory, self).save(*args, **kwargs)
+
 
 class Manufacturer(models.Model):
     title = models.CharField(max_length=255)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, RecommendedProduct, Category, Manufacturer
+from .models import Product, RecommendedProduct, Category, Manufacturer, SubCategory
 
 
 @admin.register(Product)
@@ -10,6 +10,12 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name',)
 
+class ProductInline(admin.TabularInline):
+    model = Product
+    fields = ['name', 'image', 'price', 'available', 'manufacturer', 'status']
+    readonly_fields = ['name', 'image', 'price', 'available', 'manufacturer', 'status']
+    can_delete = False
+    extra = 0
 
 @admin.register(RecommendedProduct)
 class RecommendedProduct(admin.ModelAdmin):
@@ -23,6 +29,7 @@ class SubcategoryInline(admin.StackedInline):
     list_display_links = ['name']
     extra = 0
     verbose_name_plural = 'Підкатегорії'
+
 
 
 @admin.register(Category)
@@ -55,3 +62,10 @@ class CategoryAdmin(admin.ModelAdmin):
 class ManufacturerAdmin(admin.ModelAdmin):
     model = Manufacturer
     prepopulated_fields = {'slug': ('title',)}
+
+
+@admin.register(SubCategory)
+class SubCategoryAdmin(admin.ModelAdmin):
+    list_display = ['name','position', 'is_visible']
+    list_editable = ['position', 'is_visible']
+    inlines = [ProductInline]
