@@ -1,6 +1,7 @@
 from django import forms
 from .models import Category
 
+
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(label='Назва', max_length=255)
     h1 = forms.CharField(label='H1', max_length=255)
@@ -15,3 +16,5 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ('name', 'h1', 'description', 'photo', 'meta_title', 'meta_description', 'position', 'is_visible', 'parent')
+
+

@@ -54,18 +54,20 @@
                     <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
                 </a>
             </div>
+
             <div class="col-lg-4 col-6 text-left">
-                <form action="">
+                <form action="{% url 'main_page:search' %}" method="GET">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
+                        <input type="text" class="form-control" name="q" placeholder="Що шукаєте?">
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
+                            <span class="input-group-text bg-transparent text-primary" onclick="this.closest('form').submit();" type="submit">
                                 <i class="fa fa-search"></i>
                             </span>
                         </div>
                     </div>
                 </form>
             </div>
+
             <div class="col-lg-4 col-6 text-right">
                 <p class="m-0">{{ contacts.email }}</p>
                 <h5 class="m-0">{{ contacts.phone_1 }}</h5>

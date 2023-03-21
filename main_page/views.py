@@ -62,3 +62,10 @@ def sub_category_list(request, slug):
     else:
         return render(request, 'sub_category_product_list.html', context=data)
 
+def search(request):
+    query = request.GET.get('q')
+    search_products = Product.objects.filter(name__icontains=query)
+    data = {'search_products': search_products, 'query': query}
+    context_data = get_common_context()
+    data.update(context_data)
+    return render(request, 'search.html', context=data)
