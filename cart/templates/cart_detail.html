@@ -98,7 +98,8 @@
                             <h5>Разом</h5>
                             <h5>160 UAH</h5>
                         </div>
-                        <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Продовжити офромлення</button>
+                        <a href="{% url "shop:product_list" %}" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Продовжити покупки</a>
+                        <a href="{% url "orders:order_create" %}" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Оформити замовлення</a>
                     </div>
                 </div>
             </div>

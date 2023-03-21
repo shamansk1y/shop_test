@@ -5,6 +5,8 @@ Functions:
 - get_page_context: gets the page context with the current request taken into account.
 """
 from django.db.models import Count
+
+from cart.cart import Cart
 from .forms import SubscriptionForm, ContactUsForm
 from .models import Slider, Baner, Advantages, Contacts
 from shop.models import Product, RecommendedProduct, Category, Manufacturer

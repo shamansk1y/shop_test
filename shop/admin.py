@@ -66,6 +66,7 @@ class ManufacturerAdmin(admin.ModelAdmin):
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(admin.ModelAdmin):
-    list_display = ['name','position', 'is_visible']
+    list_display = ['name', 'position', 'is_visible']
     list_editable = ['position', 'is_visible']
     inlines = [ProductInline]
+

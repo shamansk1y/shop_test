@@ -1,5 +1,7 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
+
+from cart.cart import Cart
 from main_page.context_data import get_page_context, get_common_context
 from main_page.forms import ContactUsForm, SubscriptionForm
 from shop.models import Category, Product
@@ -20,10 +22,14 @@ def handle_post_request(request):
 
 
 def index(request):
+    cart = Cart(request)
     if request.method == 'POST':
         handle_post_request(request)
-
-    data = get_page_context(request)
+    data = {
+        'cart': cart,
+    }
+    context_data = get_common_context()
+    data.update(context_data)
     return render(request, 'index.html', context=data)
 
 def contacts(request):
@@ -43,6 +49,7 @@ def category_list(request):
 
 
 def sub_category_list(request, slug):
+    cart = Cart(request)
     cat = get_object_or_404(Category, slug=slug)
     child = cat.children.all()
     cat_products = Product.objects.filter(category=cat)  # фильтруем товары по категории
@@ -52,6 +59,7 @@ def sub_category_list(request, slug):
     data = {
         'cat': cat,
         'child': child,
+        'cart': cart,
         'cat_products': cat_products,  # передаем отфильтрованные товары в шаблон
         'page_obj': page_obj,
     }

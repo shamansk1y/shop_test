@@ -1,4 +1,3 @@
-from django.db.models import F
 from django.shortcuts import get_object_or_404, render
 from cart.cart import Cart
 from main_page.context_data import get_common_context
@@ -27,9 +26,11 @@ def product_list(request, category_slug=None):
 
 
 def product_detail(request, id, slug):
+    cart = Cart(request)
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
     data = {
-        'product': product
+        'product': product,
+        'cart': cart,
     }
     context_data = get_common_context()
     data.update(context_data)
