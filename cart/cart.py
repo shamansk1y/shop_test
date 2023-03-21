@@ -33,7 +33,6 @@ class Cart:
 
     def sub(self, product):
         product_id = str(product.id)
-        print('test')
         if product_id in self.cart:
             self.cart[product_id]['quantity'] -= 1
             if self.cart[product_id]['quantity'] <= 0:

@@ -44,8 +44,8 @@
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
 
                                     <div class="input-group-btn">
-                                        <a href="{% url 'cart:cart_remove' product.id %}">
-                                            <button class="btn btn-sm btn-primary btn-minus" >
+                                        <a href="{% url 'cart:cart_sub' product.id %}">
+                                            <button class="btn btn-sm btn-primary btn-plus" >
                                                 <i class="fa fa-minus"></i>
                                             </button>
                                         </a>
@@ -58,6 +58,7 @@
                                             </button>
                                         </a>
                                     </div>
+
                                 </div>
                             </td>
                             <td class="align-middle">{{ item.total_price }} UAH</td>
