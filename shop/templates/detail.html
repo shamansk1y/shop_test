@@ -62,7 +62,7 @@
                         <small class="pt-1">(99 Reviews)</small>
                     </div>
                     <h3 class="font-weight-semi-bold mb-4">{{ product.price }} UAH</h3>
-                    <h5 class="font-weight-semi-bold mb-4">Наявність: {{ product.status }} </h5>
+                    <h5 class="font-weight-semi-bold mb-4">Наявність: {{ product.get_status_display }} </h5>
                     <p class="mb-4">{{ product.description }}</p>
                     <div class="d-flex mb-3">
                         <strong class="text-dark mr-3">Доступні розміри:</strong>
