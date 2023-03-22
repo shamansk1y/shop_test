@@ -9,6 +9,18 @@ from main_page.utils import get_file_name
 from PIL import Image
 
 
+class Size(models.Model):
+    name = models.CharField(max_length=50)
+    position = models.IntegerField()
+    is_visible = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Розмірна сітка'
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name='Назва')
     slug = models.SlugField(unique=True, blank=True, null=True, verbose_name='Слаг')
@@ -101,6 +113,7 @@ class Product(models.Model):
         ('C', 'Скоро в наявності'),
         ]
     status = models.CharField(max_length=1, choices=STASTUS_CHOICES, blank=True, default='Н')
+    sizes = models.ManyToManyField(Size, related_name='products', blank=True)
 
     class Meta:
         ordering = ('-created',)
@@ -137,6 +150,8 @@ class Product(models.Model):
 
         super(Product, self).save(*args, **kwargs)
 
+    def get_sizes(self):
+        return self.sizes.filter(is_visible=True)
 
     def __str__(self):
         return self.name
@@ -153,8 +168,5 @@ class RecommendedProduct(models.Model):
 
     def __str__(self):
         return self.product.name
-
-
-
 
 

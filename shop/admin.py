@@ -1,6 +1,9 @@
 from django.contrib import admin
-from .models import Product, RecommendedProduct, Category, Manufacturer, SubCategory
+from .models import Product, RecommendedProduct, Category, Manufacturer, SubCategory, Size
 
+
+class SizeInline(admin.TabularInline):
+    model = Product.sizes.through
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -9,6 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ['image', 'price', 'available']
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name',)
+    inlines = [SizeInline]
 
 class ProductInline(admin.TabularInline):
     model = Product
@@ -17,6 +21,9 @@ class ProductInline(admin.TabularInline):
     can_delete = False
     extra = 0
 
+@admin.register(Size)
+class SizeAdmin(admin.ModelAdmin):
+    verbose_name_plural = 'Розмірна сітка'
 @admin.register(RecommendedProduct)
 class RecommendedProduct(admin.ModelAdmin):
     model = RecommendedProduct
@@ -69,4 +76,3 @@ class SubCategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'position', 'is_visible']
     list_editable = ['position', 'is_visible']
     inlines = [ProductInline]
-

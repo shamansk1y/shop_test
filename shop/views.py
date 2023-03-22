@@ -28,9 +28,11 @@ def product_list(request, category_slug=None):
 def product_detail(request, id, slug):
     cart = Cart(request)
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
+    sizes = product.get_sizes()
     data = {
         'product': product,
         'cart': cart,
+        'sizes': sizes,
     }
     context_data = get_common_context()
     data.update(context_data)

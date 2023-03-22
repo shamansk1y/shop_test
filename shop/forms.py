@@ -1,5 +1,5 @@
 from django import forms
-from .models import Category
+from .models import Category, Size
 
 
 class CategoryForm(forms.ModelForm):
@@ -18,3 +18,5 @@ class CategoryForm(forms.ModelForm):
         fields = ('name', 'h1', 'description', 'photo', 'meta_title', 'meta_description', 'position', 'is_visible', 'parent')
 
 
+class SizeForm(forms.Form):
+    size = forms.ModelChoiceField(queryset=Size.objects.filter(is_visible=True))
