@@ -24,7 +24,7 @@
         <div class="row px-xl-5">
             <div class="col-lg-5 mb-30">
 
-                <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div id="product-carousel" class="carousel slide">
                     <div class="carousel-inner bg-light">
                         <div class="carousel-item active">
                             <img class="w-100 h-100" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
@@ -37,13 +37,14 @@
                             {% endfor %}
                         {% endif %}
                     </div>
-                    <a class="carousel-control-prev">
+                    <a class="carousel-control-prev" data-target="#product-carousel" data-slide="prev">
                         <i class="fa fa-2x fa-angle-left text-dark"></i>
                     </a>
-                    <a class="carousel-control-next">
+                    <a class="carousel-control-next" data-target="#product-carousel" data-slide="next">
                         <i class="fa fa-2x fa-angle-right text-dark"></i>
                     </a>
                 </div>
+
 
             </div>
 
@@ -210,7 +211,7 @@
                     <div class="product-item bg-light">
 
                         <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                            <img class="img-fluid w-100" src="" alt="">
                             <div class="product-action">
                                 <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                                 <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
@@ -236,7 +237,7 @@
 
                     <div class="product-item bg-light">
                         <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/product-2.jpg" alt="">
+                            <img class="img-fluid w-100" src="" alt="">
                             <div class="product-action">
                                 <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                                 <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
