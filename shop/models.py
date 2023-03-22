@@ -38,6 +38,31 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+        # проверяем, есть ли изображение
+        if self.photo:
+            # открываем изображение с помощью библиотеки PIL
+            img = Image.open(self.photo)
+
+            # проверяем, является ли изображение квадратным
+            if img.width != img.height:
+                size = (max(img.width, img.height), max(img.width, img.height))
+                img_with_border = Image.new("RGB", size, (245, 245, 245))
+                x = (size[0] - img.width) // 2
+                y = (size[1] - img.height) // 2
+                img_with_border.paste(img, (x, y))
+
+                # получаем формат изображения из имени файла
+                file_ext = os.path.splitext(self.photo.name)[1].lower()
+                format_dict = {'.jpg': 'JPEG', '.jpeg': 'JPEG', '.png': 'PNG', '.gif': 'GIF'}
+                image_format = format_dict.get(file_ext, 'JPEG')
+
+                # сохраняем квадратное изображение в том же формате, что и оригинал
+                img_io = BytesIO()
+                img_with_border.save(img_io, format=image_format)
+                img_io.seek(0)
+                self.photo.save(self.photo.name, ContentFile(img_io.read()), save=False)
+
+
         super(Category, self).save(*args, **kwargs)
 
     class Meta:
@@ -69,14 +94,41 @@ class SubCategory(Category):
 class Manufacturer(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
-    image = models.ImageField(upload_to='manufacturer/images/')
-    grid_image = models.ImageField(upload_to='manufacturer/grid_images/', blank=True)
+    image = models.ImageField(upload_to=get_file_name)
+    grid_image = models.ImageField(upload_to=get_file_name, blank=True)
     position = models.PositiveIntegerField()
     is_visible = models.BooleanField(default=True)
     description = RichTextField()
     h1 = models.CharField(max_length=255, blank=True)
     meta_title = models.CharField(max_length=255, blank=True)
     meta_description = models.CharField(max_length=255, blank=True)
+
+    def save(self, *args, **kwargs):
+        # проверяем, есть ли изображение
+        if self.image:
+            # открываем изображение с помощью библиотеки PIL
+            img = Image.open(self.image)
+
+            # проверяем, является ли изображение квадратным
+            if img.width != img.height:
+                size = (max(img.width, img.height), max(img.width, img.height))
+                img_with_border = Image.new("RGB", size, (245, 245, 245))
+                x = (size[0] - img.width) // 2
+                y = (size[1] - img.height) // 2
+                img_with_border.paste(img, (x, y))
+
+                # получаем формат изображения из имени файла
+                file_ext = os.path.splitext(self.image.name)[1].lower()
+                format_dict = {'.jpg': 'JPEG', '.jpeg': 'JPEG', '.png': 'PNG', '.gif': 'GIF'}
+                image_format = format_dict.get(file_ext, 'JPEG')
+
+                # сохраняем квадратное изображение в том же формате, что и оригинал
+                img_io = BytesIO()
+                img_with_border.save(img_io, format=image_format)
+                img_io.seek(0)
+                self.image.save(self.image.name, ContentFile(img_io.read()), save=False)
+
+        super(Manufacturer, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -154,8 +206,21 @@ class Product(models.Model):
     def get_sizes(self):
         return self.sizes.filter(is_visible=True)
 
+    def get_subproductimages(self):
+        return self.subproductimages.all()
+
     def __str__(self):
         return self.name
+
+class SubProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='subproductimages')
+    image = models.ImageField(upload_to='sub_image/', blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Дополнительные изображения товара'
+
+    def __str__(self):
+        return f'{self.product.name} - {self.id}'
 
 
 

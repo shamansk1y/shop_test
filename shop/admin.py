@@ -1,6 +1,10 @@
 from django.contrib import admin
-from .models import Product, RecommendedProduct, Category, Manufacturer, SubCategory, Size
+from .models import Product, RecommendedProduct, Category, Manufacturer, SubCategory, Size, SubProductImage
 
+
+class SubProductImageInline(admin.TabularInline):
+    model = SubProductImage
+    extra = 1
 
 class SizeInline(admin.TabularInline):
     model = Product.sizes.through
@@ -12,7 +16,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ['image', 'price', 'available']
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name',)
-    inlines = [SizeInline]
+    inlines = [SizeInline, SubProductImageInline]
 
 class ProductInline(admin.TabularInline):
     model = Product
