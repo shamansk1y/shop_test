@@ -23,7 +23,11 @@ class ProductInline(admin.TabularInline):
 
 @admin.register(Size)
 class SizeAdmin(admin.ModelAdmin):
+    list_display = ['name','position', 'is_visible']
+    list_editable = ['position', 'is_visible']
     verbose_name_plural = 'Розмірна сітка'
+
+
 @admin.register(RecommendedProduct)
 class RecommendedProduct(admin.ModelAdmin):
     model = RecommendedProduct

@@ -18,6 +18,7 @@ class Size(models.Model):
         return self.name
 
     class Meta:
+        ordering = ('position',)
         verbose_name_plural = 'Розмірна сітка'
 
 
