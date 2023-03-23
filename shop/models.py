@@ -174,7 +174,7 @@ class Product(models.Model):
         verbose_name_plural = 'Товари'
 
     def get_absolute_url(self):
-        return reverse("shop:product_detail", args=[self.id, self.slug])
+        return reverse("shop:product_detail", args=[self.slug])
 
     def save(self, *args, **kwargs):
         # проверяем, есть ли изображение
