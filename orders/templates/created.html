@@ -2,8 +2,28 @@
 
 {% block title %}Thank you{% endblock %}
 
+
+    <!-- Breadcrumb Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <div class="col-12">
+                <nav class="breadcrumb bg-light mb-30">
+                    <a class="breadcrumb-item text-dark" href="{% url 'main_page:index' %}">Головна</a>
+                    <span class="breadcrumb-item active">Ваше замовлення відправлено</span>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+
 {% block content %}
-    <h1>Thank you</h1>
-    <p>Your order has been successfully completed.</p>
-    <p>Your order number is <strong>{{ order.id }}</strong>.</p>
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Ваше замовлення успішно оформлене</span></h2>
+    <div style="text-align:center;">
+        <h1>Дякуємо!</h1>
+        <p>Ваше замовлення на опрацюванні</p>
+        <p>Наші менеджери зв'яжуться з вами найближчим часом для підтвердження</p>
+        <p>Ваше замовлення №<strong>{{ order.id }}</strong>.</p>
+    </div>
+
 {% endblock %}

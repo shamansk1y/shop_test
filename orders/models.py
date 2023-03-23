@@ -1,14 +1,20 @@
+from django.core.validators import RegexValidator
 from django.db import models
-
 from shop.models import Product
 
 class Order(models.Model):
-    first_name = models.CharField(max_length=50)
+    phone_validator = RegexValidator(regex=r'^\+?3?8?0\d{2}[- ]?(\d[ -]?){7}$', message='Error phone number')
+
+
     last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50)
     email = models.EmailField()
-    address = models.CharField(max_length=250)
-    postal_code = models.CharField(max_length=20)
+    phone = models.CharField(max_length=20, validators=[phone_validator])
     city = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=20)
+    address = models.CharField(max_length=250, blank=True, null=True)
+    message = models.TextField(max_length=250, blank=True, null=True)
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
@@ -30,7 +36,7 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return '{}'.format(self.id)
+        return 'f {}'.format(self.id)
 
     def get_cost(self):
         return self.price * self.quantity
