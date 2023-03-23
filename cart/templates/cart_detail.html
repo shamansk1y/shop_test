@@ -28,6 +28,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>Товар</th>
+                            <th>Розмір</th>
                             <th>Ціна</th>
                             <th>Кількість</th>
                             <th>Разом</th>
@@ -39,7 +40,8 @@
                         {% with product=item.product %}
                         <tr>
                             <td class="align-middle"> <a href="{{ product.get_absolute_url }}"> <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/product.png" %}{% endif %}" alt="" style="width: 50px;"> {{ product.name }} </a> </td>
-                            <td class="align-middle">{{ item.price }} UAH</td>
+                            <td class="align-middle">{{ item.size }}</td>
+                            <td class="align-middle">{{ product.price }} UAH</td>
                             <td class="align-middle">
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
 

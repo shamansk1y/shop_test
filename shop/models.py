@@ -214,7 +214,43 @@ class Product(models.Model):
 
 class SubProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='subproductimages')
-    image = models.ImageField(upload_to='sub_image/', blank=True)
+    image = models.ImageField(upload_to=get_file_name, blank=True)
+    slug = models.SlugField(blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.product.slug)
+        # проверяем, есть ли изображение с таким же slug
+        i = 1
+        while SubProductImage.objects.filter(product=self.product, slug=self.slug).exists():
+            i += 1
+            self.slug = f"{slugify(self.product.slug)}-{i}"
+        if self.image:
+            # открываем изображение с помощью библиотеки PIL
+            img = Image.open(self.image)
+
+            # проверяем, является ли изображение квадратным
+            if img.width != img.height:
+                size = (max(img.width, img.height), max(img.width, img.height))
+                img_with_border = Image.new("RGB", size, (245, 245, 245))
+                x = (size[0] - img.width) // 2
+                y = (size[1] - img.height) // 2
+                img_with_border.paste(img, (x, y))
+
+                # получаем формат изображения из имени файла
+                file_ext = os.path.splitext(self.image.name)[1].lower()
+                format_dict = {'.jpg': 'JPEG', '.jpeg': 'JPEG', '.png': 'PNG', '.gif': 'GIF'}
+                image_format = format_dict.get(file_ext, 'JPEG')
+
+                # сохраняем квадратное изображение в том же формате, что и оригинал
+                img_io = BytesIO()
+                img_with_border.save(img_io, format=image_format)
+                img_io.seek(0)
+                self.image.save(self.image.name, ContentFile(img_io.read()), save=False)
+
+
+        super(SubProductImage, self).save(*args, **kwargs)
+
 
     class Meta:
         verbose_name_plural = 'Дополнительные изображения товара'

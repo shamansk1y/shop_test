@@ -67,12 +67,11 @@
                     <div class="d-flex mb-3">
                         <strong class="text-dark mr-3">Доступні розміри:</strong>
                         <form>
-                            {% for size in sizes %}
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="size-1" name="size">
-                                    <label class="custom-control-label" for="size-1">{{ size.name }}</label>
-                                </div>
-                            {% endfor %}
+                            <select class="custom-select" name="size" id="size-select">
+                                {% for size in sizes %}
+                                    <option value="{{ size.name }}">{{ size.name }}</option>
+                                {% endfor %}
+                            </select>
                         </form>
                     </div>
 
@@ -90,7 +89,8 @@
                                 </button>
                             </div>
                         </div>
-                        <button class="btn btn-primary px-3" onclick="location.href='{% url "cart:cart_add" product.id %}'"><i class="fa fa-shopping-cart mr-1"></i>Додати до кошика</button>
+                        <button class="btn btn-primary px-3" onclick="location.href='{% url "cart:cart_add" product.id %}?size=' + document.getElementById('size-select').value"><i class="fa fa-shopping-cart mr-1"></i>Додати до кошика</button>
+
                     </div>
 
                 </div>
