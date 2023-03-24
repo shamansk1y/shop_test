@@ -1,9 +1,12 @@
-from django.shortcuts import get_object_or_404, render
+from django.db.models import Avg
+from django.shortcuts import get_object_or_404, render, redirect
 from cart.cart import Cart
 from main_page.context_data import get_common_context
+from main_page.forms import ReviewForm
+from main_page.models import Review
 from .models import Product
 from django.core.paginator import Paginator
-
+from django.contrib import messages
 
 def product_list(request, category_slug=None):
     cart = Cart(request)
@@ -39,13 +42,24 @@ def product_detail(request, slug):
     cart = Cart(request)
     product = get_object_or_404(Product, slug=slug, available=True)
     sizes = product.get_sizes()
+    average_rating = Review.objects.aggregate(Avg('rating'))['rating__avg']
+    review_app = product.review_set.filter(is_approved=True)
     data = {
         'product': product,
         'cart': cart,
         'sizes': sizes,
+        'average_rating': average_rating,
+        'review_app': review_app,
     }
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.save()
+    else:
+        form = ReviewForm()
     context_data = get_common_context()
     data.update(context_data)
+    data['form'] = form
     return render(request, 'detail.html', context=data)
-
-

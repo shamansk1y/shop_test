@@ -1,4 +1,4 @@
-from main_page.models import Subscription, ContactUs
+from main_page.models import Subscription, ContactUs, Review
 from django import forms
 
 
@@ -67,3 +67,15 @@ class ContactUsForm(forms.ModelForm):
     class Meta:
         model = ContactUs
         fields = ['name', 'email', 'subject', 'message']
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rating', 'name', 'email', 'message']
+
+    name = forms.CharField(label="Ім'я", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ваше ім'я"}))
+    email = forms.EmailField(label='Еmail', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ваш email'}))
+    message = forms.CharField(label='Коментар', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Ваш відгук'}))
+    rating = forms.ChoiceField(choices=[(1, ''), (2, ''), (3, ''), (4, ''), (5, '5')], widget=forms.RadioSelect(attrs={'class': 'form-check-inline'}), label='Оцінка в 1 до 5')
+

@@ -12,4 +12,5 @@ urlpatterns = [
     path('category/<slug:slug>/', sub_category_list, name='sub_category_list'),
     path('search/', search, name='search'),
 
+
 ]

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from main_page.models import Slider, Baner, Advantages, Contacts, ContactUs, Subscription
+from main_page.models import Slider, Baner, Advantages, Contacts, ContactUs, Subscription, Review
 
 
 @admin.register(Slider)
@@ -53,3 +53,11 @@ class ContactUsAdmin(admin.ModelAdmin):
     list_editable = ['name', 'email', 'subject', 'message', 'is_processed']
     list_display = ['name', 'email', 'subject', 'message', 'date', 'date_processing', 'is_processed']
     list_display_links = None
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    model = Review
+    list_editable = ['email', 'message', 'rating', 'product', 'date', 'is_approved']
+    list_display = ['name', 'email', 'message', 'rating', 'product', 'date', 'is_approved']
+
