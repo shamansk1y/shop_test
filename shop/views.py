@@ -5,12 +5,23 @@ from .models import Product
 from django.core.paginator import Paginator
 
 
-
 def product_list(request, category_slug=None):
     cart = Cart(request)
-    products = Product.objects.filter(available=True).order_by('position')
-    count = int(request.GET.get('count', 24)) # 24 это количество товаров по умолчанию
-    paginator = Paginator(products, count) # разбиваем на страницы по count товаров на странице
+    sort = request.GET.get('sort', '')  # получаем параметр сортировки
+    products = Product.objects.filter(available=True)  # получаем все продукты
+
+    # обработка сортировки
+    if sort == 'price_desc':
+        products = products.order_by('-price')
+    elif sort == 'price_asc':
+        products = products.order_by('price')
+    elif sort == 'date_desc':
+        products = products.order_by('-created')
+    else:
+        products = products.order_by('position')
+
+    count = int(request.GET.get('count', 24))
+    paginator = Paginator(products, count)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -22,7 +33,6 @@ def product_list(request, category_slug=None):
     context_data = get_common_context()
     data.update(context_data)
     return render(request, 'product_list.html', context=data)
-
 
 
 def product_detail(request, slug):

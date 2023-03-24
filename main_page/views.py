@@ -52,16 +52,26 @@ def sub_category_list(request, slug):
     cart = Cart(request)
     cat = get_object_or_404(Category, slug=slug)
     child = cat.children.all()
-    cat_products = Product.objects.filter(category=cat)  # фильтруем товары по категории
-    paginator = Paginator(cat_products, 24) # разбиваем на страницы по 8 товаров на странице
+
+    # Обработка параметра сортировки
+    sort_by = request.GET.get('sort', '')
+    if sort_by == 'price_asc':
+        cat_products = Product.objects.filter(category=cat).order_by('price')
+    elif sort_by == 'price_desc':
+        cat_products = Product.objects.filter(category=cat).order_by('-price')
+    else:
+        cat_products = Product.objects.filter(category=cat)
+
+    paginator = Paginator(cat_products, 24)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     data = {
         'cat': cat,
         'child': child,
         'cart': cart,
-        'cat_products': cat_products,  # передаем отфильтрованные товары в шаблон
+        'cat_products': cat_products,
         'page_obj': page_obj,
+        'sort_by': sort_by,
     }
     context_data = get_common_context()
     data.update(context_data)
@@ -69,6 +79,7 @@ def sub_category_list(request, slug):
         return render(request, 'sub_category_list.html', context=data)
     else:
         return render(request, 'sub_category_product_list.html', context=data)
+
 
 def search(request):
     query = request.GET.get('q')

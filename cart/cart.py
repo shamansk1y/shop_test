@@ -21,15 +21,14 @@ class Cart:
         """
         Add a product to the cart or update its quantity.
         """
-        product_id = str(product.id)
-        if product_id not in self.cart:
-            self.cart[product_id] = {'quantity': 0, 'price': str(product.price), 'size': size}
+        key = str(product.id) + '-' + str(size) if size else str(product.id)
+        if key not in self.cart:
+            self.cart[key] = {'quantity': 0, 'price': str(product.price), 'size': size}
         if update_quantity:
-            self.cart[product_id]['quantity'] = quantity
+            self.cart[key]['quantity'] = quantity
         else:
-            self.cart[product_id]['quantity'] += quantity
+            self.cart[key]['quantity'] += quantity
         self.save()
-
 
     def sub(self, product):
         product_id = str(product.id)
@@ -43,13 +42,13 @@ class Cart:
         # mark the session as "modified" to make sure it gets saved
         self.session.modified = True
 
-    def remove(self, product):
+    def remove(self, product, size=None):
         """
         Remove a product from the cart.
         """
-        product_id = str(product.id)
-        if product_id in self.cart:
-            del self.cart[product_id]
+        key = str(product.id) + '-' + str(size) if size else str(product.id)
+        if key in self.cart:
+            del self.cart[key]
             self.save()
 
     def get_total_price(self):
@@ -60,19 +59,21 @@ class Cart:
         del self.session[settings.CART_SESSION_ID]
         self.save()
 
-
     def __iter__(self):
         """
         Iterate over the items in the cart and get the products from the database.
         """
-        product_ids = self.cart.keys()
+        product_ids = [key.split('-')[0] for key in self.cart.keys()]
         # get the product objects and add them to the cart
         products = Product.objects.filter(id__in=product_ids)
         cart = self.cart.copy()
 
         for product in products:
-            cart[str(product.id)]['product'] = product
-        
+            for key in cart.keys():
+                if str(product.id) == key.split('-')[0]:
+                    if not cart[key].get('product'):
+                        cart[key]['product'] = product
+
         for item in cart.values():
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']

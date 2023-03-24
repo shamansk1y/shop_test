@@ -79,7 +79,7 @@
                         <h6 class="mb-3">Товари:</h6>
                         {% for item in cart %}
                             <div class="d-flex justify-content-between">
-                                <p>{{ item.product.name }}<br> кількість: {{ item.quantity }}шт.</p>
+                                <p>{{ item.product.name }}<br> розмір: {{ item.size }}<br> кількість: {{ item.quantity }}шт.</p>
                                 <p>{{ item.total_price }} UAH</p>
                             </div>
                         {% endfor %}
