@@ -13,10 +13,11 @@ def cart_add(request, product_id):
     cart.add(product=product, quantity=1, update_quantity=False, size=size)
     return redirect('cart:cart_detail')
 
-def cart_remove(request, product_id):
+@require_GET
+def cart_remove(request, product_id, size):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    cart.remove(product)
+    cart.remove(product=product, size=size)
     return redirect('cart:cart_detail')
 
 def cart_detail(request):
@@ -27,8 +28,15 @@ def cart_detail(request):
     return render(request, 'cart_detail.html', context=data)
 
 @require_GET
-def cart_sub(request, product_id):
+def cart_sub(request, product_id, size):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    cart.sub(product)
+    cart.sub(product=product, size=size)
+    return redirect('cart:cart_detail')
+
+@require_GET
+def cart_add_quantity(request, product_id, size):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    cart.add_quantity(product=product, size=size)
     return redirect('cart:cart_detail')

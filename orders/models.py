@@ -2,9 +2,9 @@ from django.core.validators import RegexValidator
 from django.db import models
 from shop.models import Product
 
+
 class Order(models.Model):
     phone_validator = RegexValidator(regex=r'^\+?3?8?0\d{2}[- ]?(\d[ -]?){7}$', message='Error phone number')
-
 
     last_name = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50)
@@ -25,15 +25,17 @@ class Order(models.Model):
 
     def __str__(self):
         return 'Order {}'.format(self.id)
-    
+
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.item.all())
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='order_items', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
+    size = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return 'f {}'.format(self.id)

@@ -309,3 +309,7 @@ class Coupon(models.Model):
         if self.uses_remaining == 0:
             self.status = False
         self.save()
+
+    class Meta:
+        ordering = ['-end_date']
+        verbose_name_plural = 'Купони на знижку'

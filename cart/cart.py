@@ -30,12 +30,19 @@ class Cart:
             self.cart[key]['quantity'] += quantity
         self.save()
 
-    def sub(self, product):
-        product_id = str(product.id)
-        if product_id in self.cart:
-            self.cart[product_id]['quantity'] -= 1
-            if self.cart[product_id]['quantity'] <= 0:
-                del self.cart[product_id]
+    def add_quantity(self, product, size=None):
+        key = str(product.id) + '-' + str(size) if size else str(product.id)
+        if key in self.cart:
+            self.cart[key]['quantity'] += 1
+            self.save()
+
+
+    def sub(self, product, size=None):
+        key = str(product.id) + '-' + str(size) if size else str(product.id)
+        if key in self.cart:
+            self.cart[key]['quantity'] -= 1
+            if self.cart[key]['quantity'] <= 0:
+                del self.cart[key]
             self.save()
 
     def save(self):
@@ -43,9 +50,6 @@ class Cart:
         self.session.modified = True
 
     def remove(self, product, size=None):
-        """
-        Remove a product from the cart.
-        """
         key = str(product.id) + '-' + str(size) if size else str(product.id)
         if key in self.cart:
             del self.cart[key]
@@ -67,7 +71,6 @@ class Cart:
         # get the product objects and add them to the cart
         products = Product.objects.filter(id__in=product_ids)
         cart = self.cart.copy()
-
         for product in products:
             for key in cart.keys():
                 if str(product.id) == key.split('-')[0]:
