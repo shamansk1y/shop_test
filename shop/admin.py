@@ -87,16 +87,6 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
-    list_display = ['code', 'valid_from', 'valid_to', 'discount', 'active']
-    list_filter = ['active', 'valid_from', 'valid_to']
-    search_fields = ['code']
-    actions = ['activate_coupons', 'deactivate_coupons']
-
-    def activate_coupons(self, request, queryset):
-        queryset.update(active=True)
-
-    def deactivate_coupons(self, request, queryset):
-        queryset.update(active=False)
-
-    activate_coupons.short_description = 'Activate selected coupons'
-    deactivate_coupons.short_description = 'Deactivate selected coupons'
+    list_display = ('code', 'discount', 'start_date', 'end_date', 'status')
+    list_filter = ('status', 'start_date', 'end_date')
+    search_fields = ('code',)
