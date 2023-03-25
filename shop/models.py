@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from main_page.utils import get_file_name
 from PIL import Image
+from django.utils import timezone
 
 
 class Size(models.Model):
@@ -271,3 +272,40 @@ class RecommendedProduct(models.Model):
     def __str__(self):
         return self.product.name
 
+
+class Coupon(models.Model):
+    code = models.CharField(max_length=50, unique=True)
+    discount = models.DecimalField(max_digits=5, decimal_places=2)
+    products = models.ManyToManyField(Product, blank=True)
+    exclude_manufacturers = models.ManyToManyField(Manufacturer, blank=True, related_name='excluded_coupons')
+    exclude_categories = models.ManyToManyField(Category, blank=True, related_name='excluded_coupons')
+    start_date = models.DateTimeField(default=timezone.now)
+    end_date = models.DateTimeField()
+    uses_remaining = models.PositiveIntegerField(default=1)
+    status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.code
+
+    def can_be_used(self):
+        return self.status and self.start_date <= timezone.now() <= self.end_date and self.uses_remaining > 0
+
+    def is_valid_product(self, product):
+        if self.products.exists() and product not in self.products.all():
+            return False
+        if self.exclude_manufacturers.exists() and product.manufacturer in self.exclude_manufacturers.all():
+            return False
+        if self.exclude_categories.exists() and product.category in self.exclude_categories.all():
+            return False
+        return True
+
+    def apply_discount(self, cart):
+        if not self.can_be_used():
+            return
+        for item in cart:
+            if self.is_valid_product(item['product']):
+                item['total_price'] -= item['price'] * self.discount
+        self.uses_remaining -= 1
+        if self.uses_remaining == 0:
+            self.status = False
+        self.save()

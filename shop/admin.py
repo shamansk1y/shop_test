@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, RecommendedProduct, Category, Manufacturer, SubCategory, Size, SubProductImage
+from .models import Product, RecommendedProduct, Category, Manufacturer, SubCategory, Size, SubProductImage, Coupon
 
 
 class SubProductImageInline(admin.TabularInline):
@@ -84,3 +84,19 @@ class SubCategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'position', 'is_visible']
     list_editable = ['position', 'is_visible']
     inlines = [ProductInline]
+
+@admin.register(Coupon)
+class CouponAdmin(admin.ModelAdmin):
+    list_display = ['code', 'valid_from', 'valid_to', 'discount', 'active']
+    list_filter = ['active', 'valid_from', 'valid_to']
+    search_fields = ['code']
+    actions = ['activate_coupons', 'deactivate_coupons']
+
+    def activate_coupons(self, request, queryset):
+        queryset.update(active=True)
+
+    def deactivate_coupons(self, request, queryset):
+        queryset.update(active=False)
+
+    activate_coupons.short_description = 'Activate selected coupons'
+    deactivate_coupons.short_description = 'Deactivate selected coupons'
