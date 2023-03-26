@@ -2,9 +2,10 @@
 
 <!-- Products Start -->
 <div class="container-fluid pt-5 pb-3">
-    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Останні надходження товару</span></h2>
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Переглянуті товари</span></h2>
     <div class="row px-xl-5">
-        {% for product in last_products %}
+        {{ viewed_products }}
+        {% for product in viewed_products %}
 
             <div class="col-lg-3 col-md-6 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">

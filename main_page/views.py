@@ -88,3 +88,5 @@ def search(request):
     context_data = get_common_context()
     data.update(context_data)
     return render(request, 'search.html', context=data)
+
+

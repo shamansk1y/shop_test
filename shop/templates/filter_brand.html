@@ -1,22 +1,17 @@
 {% load static %}
 
-<!-- Brand Start -->
-<h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Фільтр по бренду</span></h5>
+<!-- Manufacturer Start -->
+<h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Фільтр по виробнику</span></h5>
 <div class="bg-light p-4 mb-30">
-    <form>
-        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" checked id="size-all">
-            <label class="custom-control-label" for="size-all">Всі бренди</label>
-            <span class="badge border font-weight-normal">{{ products.count }}</span>
-        </div>
+    <form action="" method="get">
+        <h4>Виробники:</h4>
         {% for manufacturer in manufacturers %}
-        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" id="size-{{ manufacturer.id }}" name="manufacturer" value="{{ manufacturer.id }}">
-            <label class="custom-control-label" for="size-{{ manufacturer.id }}">{{ manufacturer.title }}</label>
-            <span class="badge border font-weight-normal">{{ manufacturer.num_products }}</span>
-        </div>
+            <div class="form-check d-flex align-items-center justify-content-between mb-3">
+                <input class="form-check-input" type="checkbox" name="manufacturer_filter" value="{{ manufacturer.id }}" {% if manufacturer.id|slugify in manufacturer_filters %}checked{% endif %}>
+                <label class="form-check-label" for="manufacturer_filter">{{ manufacturer.title }}</label>
+            </div>
         {% endfor %}
+        <button type="submit" class="btn btn-primary">Відфільтрувати</button>
     </form>
 </div>
-
-<!-- Brand End -->
+<!-- Manufacturer End -->
