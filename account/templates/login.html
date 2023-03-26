@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}<title>Shop - Login </title>{% endblock %}
+
+
+{% block content %}
+
+
+<div id="login-box">
+  <div class="left">
+    <h1>Login</h1>
+        <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+            <button type="submit" name="signup_submit" value="Log in">Log in</button>
+        </form>
+  </div>
+
+</div>
+
+{% endblock %}

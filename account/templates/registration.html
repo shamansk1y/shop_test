@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}<title>Shop  Registration </title>{% endblock %}
+
+
+{% block content %}
+
+
+
+<div id="login-box">
+  <div class="left">
+    <h1>Sign up</h1>
+        <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+            <button type="submit" name="signup_submit" value="Sign me up">Sign me up</button>
+        </form>
+  </div>
+
+</div>
+
+{% endblock %}

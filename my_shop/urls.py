@@ -17,6 +17,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
+from account.views import logout_view, login_view, registration_view
 from info_page.views import info_page
 
 urlpatterns = [
@@ -26,7 +27,11 @@ urlpatterns = [
     path('orders/', include('orders.urls', namespace='orders')),
     path('shop/', include('shop.urls', namespace='shop')),
     path('blog/', include('blogpost.urls', namespace='blog')),
+    path('logout/', logout_view, name='logout_view'),
+    path('login/', login_view, name='login_view'),
+    path('registration/', registration_view, name='registration_view'),
     path('<slug:slug>/', info_page, name='info_page'),
+
 ]
 
 if settings.DEBUG:

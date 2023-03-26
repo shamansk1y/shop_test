@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+        <section id="reserves">
+        <div class="container">
+            <div class="col-md-10 col-md-offset-1">
+            <h3>Зворотній зв'язок</h3>
+                {% for item in contact_us_viev_manager %}
+
+                    <div class="row">
+                    <div class="col-md-3">
+                        <a href="{% url 'main_page:update_manager' pk=item.pk %}">
+                            <button type="button" class="btn btn-primary">Закрити заявку</button>
+                        </a>
+                    </div>
+                    <div class="col-md-3">{{ item.name }}</div>
+                    <div class="col-md-3">{{ item.subject }}</div>
+                    <div class="col-md-3">{{ item.email }}</div>
+                    <div class="col-md-3">{{ item.date|date:'d-m-Y' }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9"><p>{{ item.message }}</p></div>
+                </div>
+            {% endfor %}
+
+                        <h3>Підписка на email розсилку</h3>
+                {% for item in subscription_viev_manager %}
+                    <div class="row">
+                    <div class="col-md-3">
+                        <a href="{% url 'main_page:update_manager' pk=item.pk %}">
+                            <button type="button" class="btn btn-primary">Закрити заявку</button>
+                        </a>
+                    </div>
+                    <div class="col-md-3">{{ item.email }}</div>
+                    <div class="col-md-3">{{ item.date|date:'d-m-Y' }}</div>
+            {% endfor %}
+
+                <h3>Призначити зустріч</h3>
+                {% for item in make_appointment_viev_manager %}
+
+                    <div class="row">
+                    <div class="col-md-3">
+                        <a href="{% url 'main_page:update_manager' pk=item.pk %}">
+                            <button type="button" class="btn btn-primary">Закрити заявку</button>
+                        </a>
+                    </div>
+                    <div class="col-md-3">{{ item.name }}</div>
+                    <div class="col-md-3">{{ item.email }}</div>
+                    <div class="col-md-3">{{ item.child_name }}</div>
+                    <div class="col-md-3">{{ item.date|date:'d-m-Y' }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9"><p>{{ item.message }}</p></div>
+                </div>
+            {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
