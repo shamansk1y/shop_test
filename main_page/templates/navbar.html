@@ -10,9 +10,9 @@
                     <span class="h1 text-uppercase text-dark bg-light px-2">Joma</span>
                     <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
                 </a>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <a class="navbar-toggler" href="{% url 'main_page:category_list' %}" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                </a>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href="{% url 'main_page:index' %}" class="nav-item nav-link{% if request.path == 'index/' %} active{% endif %}">Головна</a>

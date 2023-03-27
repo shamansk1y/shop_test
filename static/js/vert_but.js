@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('.dropdown-toggle').click(function() {
+  $('.dropdown-toggle').on('click touchstart', function() {
     $(this).toggleClass('collapsed');
     $(this).parent().toggleClass('show');
     $(this).next('.dropdown-menu').toggleClass('show');
