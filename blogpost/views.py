@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from blogpost.models import Blog
-from main_page.context_data import get_common_context
+from main_page.context_data import get_common_context, get_page_context
 
 
 def blog_post_list(request):
@@ -14,8 +14,10 @@ def blog_post_list(request):
         'posts': posts,
         'page_obj': page_obj,
     }
+    context_req = get_page_context(request)
     context_data = get_common_context()
     data.update(context_data)
+    data.update(context_req)
     return render(request, 'post_list.html', context=data)
 
 def blog_post_detail(request, slug):
@@ -24,6 +26,8 @@ def blog_post_detail(request, slug):
     data = {
         'post': post
     }
+    context_req = get_page_context(request)
     context_data = get_common_context()
     data.update(context_data)
+    data.update(context_req)
     return render(request, 'post_detail.html', context=data)

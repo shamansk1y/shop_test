@@ -1,5 +1,27 @@
+"""
+This module contains views for user registration and login pages.
+
+Functions:
+- logout_view: Logs out the current user and redirects to the homepage.
+- login_view: Renders the login form and handles user authentication.
+- registration_view: Renders the registration form and creates a new user.
+
+Dependencies:
+- render: Renders an HTML template with a given context dictionary.
+- redirect: Redirects to a given URL.
+- get_common_context: A function from the main_page.context_data module that returns a dictionary with common
+context data for all pages.
+- UserRegistration: A Django form class for user registration.
+- UserLogin: A Django form class for user login.
+- authenticate: Authenticates a user with a given username and password.
+- login: Logs in a user and creates a session.
+- logout: Logs out the current user and destroys the session.
+- User: The Django user model for the application.
+
+"""
+
 from django.shortcuts import render, redirect
-from main_page.context_data import get_common_context
+from main_page.context_data import get_common_context, get_page_context
 from .forms import UserRegistration, UserLogin
 from django.contrib.auth import login, authenticate, logout
 
@@ -41,19 +63,18 @@ def registration_view(request):
     if form.is_valid():
         new_user = form.save(commit=False)
         new_user.set_password(form.cleaned_data['password'])
+        new_user.email = form.cleaned_data['email']
         new_user.save()
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
-        user = authenticate(username=username, password=password)
-        login(request, user)
-
         data = {
             'form': form,
             'user_manager': user_manager,
             'user_auth': user_auth,
             'user': new_user,
         }
+        context_req = get_page_context(request)
+        context_data = get_common_context()
         data.update(context_data)
+        data.update(context_req)
         return render(request, 'registration_done.html', context=data)
 
     data = {
@@ -61,5 +82,8 @@ def registration_view(request):
         'user_manager': user_manager,
         'user_auth': user_auth,
     }
+    context_req = get_page_context(request)
+    context_data = get_common_context()
     data.update(context_data)
+    data.update(context_req)
     return render(request, 'registration.html', context=data)

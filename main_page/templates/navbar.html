@@ -15,14 +15,18 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="{% url 'main_page:index' %}" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Головна</a>
-                        <a href="{% url 'info_page' 'oplata-i-dostavka' %}" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Оплата і доставка</a>
-                        <a href="{% url 'info_page' 'guarantee' %}" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Гарантії</a>
-                        <a href="{% url 'info_page' 'discounts' %}" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Знижки</a>
-                        <a href="{% url 'info_page' 'size' %}" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Розмірна таблиця</a>
-                        <a href="{% url 'info_page' 'druk-na-formi' %}" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Друк на формі</a>
-                        <a href="{% url 'blogpost:blog_post_list' %}" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Блог</a>
-                        <a href="{% url 'main_page:contacts' %}" class="nav-item nav-link{% if request.path == '/' %} active{% endif %}">Контакти</a>
+                        <a href="{% url 'main_page:index' %}" class="nav-item nav-link{% if request.path == 'index/' %} active{% endif %}">Головна</a>
+                        <a href="{% url 'info_page' 'oplata-i-dostavka' %}" class="nav-item nav-link{% if request.path == 'oplata-i-dostavka/' %} active{% endif %}">Оплата і доставка</a>
+                        <a href="{% url 'info_page' 'guarantee' %}" class="nav-item nav-link{% if request.path == 'guarantee/' %} active{% endif %}">Гарантії</a>
+                        <a href="{% url 'info_page' 'discounts' %}" class="nav-item nav-link{% if request.path == 'discounts/' %} active{% endif %}">Знижки</a>
+                        <a href="{% url 'info_page' 'size' %}" class="nav-item nav-link{% if request.path == 'size/' %} active{% endif %}">Розмірна таблиця</a>
+                        <a href="{% url 'info_page' 'druk-na-formi' %}" class="nav-item nav-link{% if request.path == 'druk-na-formi/' %} active{% endif %}">Друк на формі</a>
+                        <a href="{% url 'blogpost:blog_post_list' %}" class="nav-item nav-link{% if request.path == 'blog/' %} active{% endif %}">Блог</a>
+                        <a href="{% url 'main_page:contacts' %}" class="nav-item nav-link{% if request.path == 'contact/' %} active{% endif %}">Контакти</a>
+
+                    {% if user_manager %}
+                        <a href="{% url 'main_page:manager_list' %}" class="nav-item nav-link{% if request.path == '/manager/manager_list/' %} active{% endif %}">Manager</a>
+                    {% endif %}
 
                     </div>
                     <div class="navbar-nav ml-auto py-0 d-none d-lg-block">

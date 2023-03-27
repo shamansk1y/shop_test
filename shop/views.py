@@ -1,7 +1,7 @@
 from django.db.models import Avg, Q
 from django.shortcuts import get_object_or_404, render, redirect
 from cart.cart import Cart
-from main_page.context_data import get_common_context
+from main_page.context_data import get_common_context, get_page_context
 from main_page.forms import ReviewForm
 from main_page.models import Review
 from .models import Product, Manufacturer, Size
@@ -80,8 +80,10 @@ def product_list(request, category_slug=None):
         'sizes': sizes,
         'size_filters': size_filters,
     }
+    context_req = get_page_context(request)
     context_data = get_common_context()
     data.update(context_data)
+    data.update(context_req)
     return render(request, 'product_list.html', context=data)
 
 
@@ -106,7 +108,9 @@ def product_detail(request, slug):
             review.save()
     else:
         form = ReviewForm()
+    context_req = get_page_context(request)
     context_data = get_common_context()
     data.update(context_data)
+    data.update(context_req)
     data['form'] = form
     return render(request, 'detail.html', context=data)
