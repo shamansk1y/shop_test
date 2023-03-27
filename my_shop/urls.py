@@ -19,6 +19,7 @@ from django.urls import include, path
 from django.conf.urls.static import static
 from account.views import logout_view, login_view, registration_view
 from info_page.views import info_page
+from orders.views import order_history
 
 urlpatterns = [
     path('', include('main_page.urls')),
@@ -30,6 +31,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout_view'),
     path('login/', login_view, name='login_view'),
     path('registration/', registration_view, name='registration_view'),
+    path('order_history/', order_history, name='order_history'),
     path('<slug:slug>/', info_page, name='info_page'),
 
 ]
