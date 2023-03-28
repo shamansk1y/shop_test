@@ -111,7 +111,11 @@
                             <small class="pt-1">{{ product.review_set.all|length }} відгуки</small>
                         {% endif %}
                     </div>
-                    <h3 class="font-weight-semi-bold mb-4">{{ product.price }} UAH</h3>
+                    {% if product.discounted_price %}
+                        <h3>{{ product.discounted_price }} UAH</h3><h4 class="text-muted ml-2"><del>{{ product.price }} UAH</del></h4>
+                    {% else %}
+                        <h3>{{ product.price }} UAH</h3>
+                    {% endif %}
                     <h6 class="font-weight-semi-bold mb-4">Артикул: {{ product.article }} </h6>
                     <h5 class="font-weight-semi-bold mb-4">Наявність: {{ product.get_status_display }} </h5>
 
