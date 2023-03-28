@@ -47,7 +47,7 @@
                     <div class="text-center py-4">
                         <a class="h6 text-decoration-none product-name" href="{{ product.get_absolute_url }}">{{ product.name }}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>{{ product.price }} UAH</h5><h6 class="text-muted ml-2"><del>стара ціна</del></h6>
+                            <h5>{{ product.discounted_price }} UAH</h5><h6 class="text-muted ml-2"><del>{{ product.price }} UAH</del></h6>
                         </div>
                         <div class="d-flex justify-content-start mt-2">
                             <button class="btn btn-warning mr-2" onclick="location.href='{{ product.get_absolute_url }}'">Переглянути товар</button>

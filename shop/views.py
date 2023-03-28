@@ -29,7 +29,7 @@ def product_list(request, category_slug=None):
         {'name': 'від 500 UAH до 1000 UAH', 'min': 500, 'max': 1000},
         {'name': 'від 1000 UAH до 1500 UAH', 'min': 1000, 'max': 1500},
         {'name': 'від 1500 UAH до 2000 UAH', 'min': 1500, 'max': 2000},
-        {'name': 'від 2000 та вище', 'min': 2000, 'max': 9999},
+        {'name': 'від 2000 та вище', 'min': 2000, 'max': 99999},
     ]
 
     # get manufacturers

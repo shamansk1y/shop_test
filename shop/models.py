@@ -22,6 +22,44 @@ class Size(models.Model):
         ordering = ('position',)
         verbose_name_plural = 'Розмірна сітка'
 
+class Color(models.Model):
+    name = models.CharField(max_length=50)
+    position = models.IntegerField()
+    is_visible = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('position',)
+        verbose_name_plural = 'Варіанти кольорів'
+
+
+class AppointmentProd(models.Model):
+    name = models.CharField(max_length=50)
+    position = models.IntegerField()
+    is_visible = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('position',)
+        verbose_name_plural = 'Призначення товару'
+
+
+class Material(models.Model):
+    name = models.CharField(max_length=50)
+    position = models.IntegerField()
+    is_visible = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('position',)
+        verbose_name_plural = 'Матеріал товару'
+
 
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name='Назва')
@@ -143,22 +181,32 @@ class Product(models.Model):
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
     image = models.ImageField(upload_to=get_file_name, blank=True)
+    article = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    discounted_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     position = models.PositiveIntegerField(default=1)
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_NULL, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
+    appointment = models.ForeignKey(AppointmentProd, on_delete=models.SET_NULL, null=True, default=None, blank=True)
+    material = models.ForeignKey(Material, on_delete=models.SET_NULL, null=True, blank=True)
     GENDER_CHOICES = [
         ('Ч', 'Чоловічий'),
         ('Ж', 'Жіночий'),
-        ('Д', 'Дитячий'),
-        ('П', 'Підлітковий'),
         ('У', 'Унісекс'),
         ]
-    characteristics_gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, default=True)
+    characteristics_gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
+    AGE_CHOICES = [
+        ('Д', 'Дорослий'),
+        ('К', 'Дитячий'),
+        ('Т', 'Підлітковий'),
+        ('А', 'Дорослий, Дитячий'),
+        ]
+    age_group = models.CharField(max_length=1, choices=AGE_CHOICES, blank=True)
     STASTUS_CHOICES = [
         ('Н', 'Немає в наявності'),
         ('В', 'В наявності'),

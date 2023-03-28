@@ -112,7 +112,9 @@
                         {% endif %}
                     </div>
                     <h3 class="font-weight-semi-bold mb-4">{{ product.price }} UAH</h3>
+                    <h6 class="font-weight-semi-bold mb-4">Артикул: {{ product.article }} </h6>
                     <h5 class="font-weight-semi-bold mb-4">Наявність: {{ product.get_status_display }} </h5>
+
                     <p class="mb-4">{{ product.description }}</p>
                     <div class="d-flex mb-3">
                         <strong class="text-dark mr-3">Доступні розміри:</strong>
@@ -148,32 +150,32 @@
                                 <div class="col-md-6">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item px-0">
-                                            Sit erat duo lorem duo ea consetetur, et eirmod takimata.
+                                            Бренд: {{ product.manufacturer }}
                                         </li>
                                         <li class="list-group-item px-0">
-                                            Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
+                                            Колекція/сезон: {{ product.manufacturer }}
                                         </li>
                                         <li class="list-group-item px-0">
-                                            Duo amet accusam eirmod nonumy stet et et stet eirmod.
+                                            Матеріал: {{ product.material }}
                                         </li>
                                         <li class="list-group-item px-0">
-                                            Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
+                                            Колір: {{ product.color }}
                                         </li>
                                       </ul> 
                                 </div>
                                 <div class="col-md-6">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item px-0">
-                                            Sit erat duo lorem duo ea consetetur, et eirmod takimata.
+                                            Вікова група: {{ product.get_age_group_display }}
                                         </li>
                                         <li class="list-group-item px-0">
-                                            Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
+                                            Стать: {{ product.get_characteristics_gender_display }}
                                         </li>
                                         <li class="list-group-item px-0">
-                                            Duo amet accusam eirmod nonumy stet et et stet eirmod.
+                                            Призначення: {{ product.appointment }}
                                         </li>
                                         <li class="list-group-item px-0">
-                                            Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
+                                            Габарити: {{ product.manufacturer }}
                                         </li>
                                       </ul> 
                                 </div>
