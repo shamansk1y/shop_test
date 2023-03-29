@@ -32,6 +32,7 @@ urlpatterns = [
     path('login/', login_view, name='login_view'),
     path('registration/', registration_view, name='registration_view'),
     path('order_history/', order_history, name='order_history'),
+    path('favorite/', include('account.urls')),
     path('<slug:slug>/', info_page, name='info_page'),
 
 ]

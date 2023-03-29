@@ -1,5 +1,7 @@
 from django.db.models import Avg, Q
 from django.shortcuts import get_object_or_404, render, redirect
+
+from account.models import Favorite
 from cart.cart import Cart
 from main_page.context_data import get_common_context, get_page_context
 from main_page.forms import ReviewForm
@@ -25,11 +27,11 @@ def product_list(request, category_slug=None):
 
     # get price ranges
     price_ranges = [
-        {'name': 'від 0 до 500 UAH', 'min': 0, 'max': 500},
-        {'name': 'від 500 UAH до 1000 UAH', 'min': 500, 'max': 1000},
-        {'name': 'від 1000 UAH до 1500 UAH', 'min': 1000, 'max': 1500},
-        {'name': 'від 1500 UAH до 2000 UAH', 'min': 1500, 'max': 2000},
-        {'name': 'від 2000 та вище', 'min': 2000, 'max': 99999},
+        {'name': 'від 1 до 500 UAH', 'min': 1, 'max': 500},
+        {'name': 'від 501 UAH до 1000 UAH', 'min': 501, 'max': 1000},
+        {'name': 'від 1001 UAH до 1500 UAH', 'min': 1001, 'max': 1500},
+        {'name': 'від 1501 UAH до 2000 UAH', 'min': 1501, 'max': 2000},
+        {'name': 'від 2001 та вище', 'min': 2001, 'max': 19999},
     ]
 
     # get manufacturers
@@ -90,10 +92,16 @@ def product_list(request, category_slug=None):
 def product_detail(request, slug):
     cart = Cart(request)
     product = get_object_or_404(Product, slug=slug, available=True)
+    favorites = Favorite.objects.filter(user=request.user)
+    user_favorites = []
+    if request.user.is_authenticated:
+        user_favorites = Favorite.objects.filter(user=request.user, product=product)
     sizes = product.get_sizes()
     average_rating = Review.objects.aggregate(Avg('rating'))['rating__avg']
     review_app = product.review_set.filter(is_approved=True)
     data = {
+        'user_favorites': user_favorites,
+        'favorites': favorites,
         'product': product,
         'cart': cart,
         'sizes': sizes,

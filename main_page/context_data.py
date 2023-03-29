@@ -4,7 +4,6 @@ Functions:
 - get_common_context: gets the common page context used across multiple pages of the site.
 - get_page_context: gets the page context with the current request taken into account.
 """
-from django.db.models import Count
 
 from cart.cart import Cart
 from .forms import SubscriptionForm, ContactUsForm

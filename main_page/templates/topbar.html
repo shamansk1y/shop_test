@@ -21,7 +21,7 @@
                         {% else %}
                             <a class="dropdown-item" href="{% url 'order_history' %}">Історія замовлень</a>
                             <a class="dropdown-item" href="">Контактна інформація</a>
-                            <a class="dropdown-item" href="">Вибрані товари</a>
+                            <a class="dropdown-item" href="{% url 'favorite_list' %}">Вибрані товари</a>
                             <a class="dropdown-item" href="{% url 'logout_view' %}">Вихід</a>
                         {% endif %}
                         </div>
