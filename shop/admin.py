@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Product, RecommendedProduct, Category, Manufacturer, SubCategory, Size, SubProductImage, Coupon, \
-    Color, AppointmentProd, Material
+    Color, AppointmentProd, Material, CollectionOfSeason, Dimensions
 
 
 class SubProductImageInline(admin.TabularInline):
@@ -56,6 +56,21 @@ class MaterialAdmin(admin.ModelAdmin):
     list_editable = ['position', 'is_visible']
     verbose_name_plural = 'Матеріал товару'
 
+
+@admin.register(CollectionOfSeason)
+class CollectionOfSeasonAdmin(admin.ModelAdmin):
+    model = CollectionOfSeason
+    list_display = ['name', 'position', 'is_visible']
+    list_editable = ['position', 'is_visible']
+    verbose_name_plural = 'Колекція/Рік/Сезон'
+
+
+@admin.register(Dimensions)
+class DimensionsAdmin(admin.ModelAdmin):
+    model = Dimensions
+    list_display = ['name', 'position', 'is_visible']
+    list_editable = ['position', 'is_visible']
+    verbose_name_plural = 'Габарити товару'
 
 
 @admin.register(RecommendedProduct)

@@ -116,7 +116,9 @@
                     {% else %}
                         <h3>{{ product.price }} UAH</h3>
                     {% endif %}
-                    <h6 class="font-weight-semi-bold mb-4">Артикул: {{ product.article }} </h6>
+                    {% if product.article %}
+                        <h6 class="font-weight-semi-bold mb-4">Артикул: {{ product.article }} </h6>
+                    {% endif %}
                     <h5 class="font-weight-semi-bold mb-4">Наявність: {{ product.get_status_display }} </h5>
 
                     <p class="mb-4">{{ product.description }}</p>
@@ -153,34 +155,51 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item px-0">
-                                            Бренд: {{ product.manufacturer }}
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            Колекція/сезон: {{ product.manufacturer }}
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            Матеріал: {{ product.material }}
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            Колір: {{ product.color }}
-                                        </li>
-                                      </ul> 
+                                        {% if product.manufacturer %}
+                                            <li class="list-group-item px-0">
+                                                Бренд: {{ product.manufacturer }}
+                                            </li>
+                                        {% endif %}
+                                        {% if product.collection_of_season %}
+                                            <li class="list-group-item px-0">
+                                                Колекція/сезон: {{ product.collection_of_season }}
+                                            </li>
+                                        {% endif %}
+                                        {% if product.material %}
+                                            <li class="list-group-item px-0">
+                                                Матеріал: {{ product.material }}
+                                            </li>
+                                        {% endif %}
+                                        {% if product.color %}
+                                            <li class="list-group-item px-0">
+                                                Колір: {{ product.color }}
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+
                                 </div>
                                 <div class="col-md-6">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item px-0">
-                                            Вікова група: {{ product.get_age_group_display }}
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            Стать: {{ product.get_characteristics_gender_display }}
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            Призначення: {{ product.appointment }}
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            Габарити: {{ product.manufacturer }}
-                                        </li>
+                                        {% if product.get_age_group_display %}
+                                            <li class="list-group-item px-0">
+                                                Вікова група: {{ product.get_age_group_display }}
+                                            </li>
+                                        {% endif %}
+                                        {% if product.get_characteristics_gender_display %}
+                                            <li class="list-group-item px-0">
+                                                Стать: {{ product.get_characteristics_gender_display }}
+                                            </li>
+                                        {% endif %}
+                                        {% if product.appointment %}
+                                            <li class="list-group-item px-0">
+                                                Призначення: {{ product.appointment }}
+                                            </li>
+                                        {% endif %}
+                                        {% if product.dimensions %}
+                                            <li class="list-group-item px-0">
+                                                Габарити: {{ product.dimensions }}
+                                            </li>
+                                        {% endif %}
                                       </ul> 
                                 </div>
                             </div>

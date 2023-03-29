@@ -61,6 +61,32 @@ class Material(models.Model):
         verbose_name_plural = 'Матеріал товару'
 
 
+class CollectionOfSeason(models.Model):
+    name = models.CharField(max_length=50)
+    position = models.IntegerField()
+    is_visible = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('position',)
+        verbose_name_plural = 'Колекція/Рік/Сезон'
+
+class Dimensions(models.Model):
+    name = models.CharField(max_length=75)
+    position = models.IntegerField()
+    is_visible = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('position',)
+        verbose_name_plural = 'Габарити товару'
+
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name='Назва')
     slug = models.SlugField(unique=True, blank=True, null=True, verbose_name='Слаг')
@@ -194,9 +220,11 @@ class Product(models.Model):
     color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
     appointment = models.ForeignKey(AppointmentProd, on_delete=models.SET_NULL, null=True, default=None, blank=True)
     material = models.ForeignKey(Material, on_delete=models.SET_NULL, null=True, blank=True)
+    collection_of_season = models.ForeignKey(CollectionOfSeason, on_delete=models.SET_NULL, null=True, blank=True)
+    dimensions = models.ForeignKey(Dimensions, on_delete=models.SET_NULL, null=True, blank=True)
     GENDER_CHOICES = [
-        ('Ч', 'Чоловічий'),
-        ('Ж', 'Жіночий'),
+        ('Ч', 'Чоловіча'),
+        ('Ж', 'Жіноча'),
         ('У', 'Унісекс'),
         ]
     characteristics_gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
