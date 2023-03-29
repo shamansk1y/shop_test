@@ -4,7 +4,9 @@ Functions:
 - get_common_context: gets the common page context used across multiple pages of the site.
 - get_page_context: gets the page context with the current request taken into account.
 """
+from django.db.models import Count
 
+from account.models import Favorite
 from cart.cart import Cart
 from .forms import SubscriptionForm, ContactUsForm
 from .models import Slider, Baner, Advantages, Contacts
@@ -27,10 +29,15 @@ def get_common_context():
 
 
 def get_page_context(request):
+    favorites_count = 0
+    if request.user.is_authenticated:
+        favorites_count = Favorite.objects.filter(user=request.user).aggregate(count=Count('id'))['count']
+
 
     data = {
         'user_manager': request.user.groups.filter(name='manager').exists(),
         'user_auth': request.user.is_authenticated,
+        'favorites_count': favorites_count,
     }
     context = get_common_context()
     data.update(context)

@@ -122,7 +122,7 @@
                     <h5 class="font-weight-semi-bold mb-4">Наявність: {{ product.get_status_display }} </h5>
 
                         {% if request.user.is_authenticated %}
-                            {% if product in favorites %}
+                            {% if user_favorites.exists %}
                                 <form action="{% url 'remove_from_favorite' product.slug %}" method="post">
                                     {% csrf_token %}
                                     <button type="submit">Удалить из избранного</button>
@@ -133,6 +133,7 @@
                                     <button type="submit">Добавить в избранное</button>
                                 </form>
                             {% endif %}
+
                         {% endif %}
 
                     <p class="mb-4">{{ product.description }}</p>
