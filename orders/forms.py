@@ -2,54 +2,22 @@ from django import forms
 from .models import Order
 
 class OrderCreateForm(forms.ModelForm):
-    last_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
-    'class': "form-control",
-    'type': "text",
-    'placeholder': "Вкажіть Ваше прізвище",
-    }))
+    DELIVERY_CHOICES = (
+        ('pickup', 'Самовывоз'),
+        ('address', 'Адресная доставка'),
+    )
 
-    first_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
-    'class': "form-control",
-    'type': "text",
-    'placeholder': "Вкажіть Ваше ім'я",
-    }))
+    delivery_option = forms.ChoiceField(choices=DELIVERY_CHOICES, widget=forms.RadioSelect)
 
-    email = forms.EmailField(max_length=50, widget=forms.TextInput(attrs={
-    'class': "form-control",
-    'type': "text",
-    'placeholder': "example@email.com",
-    }))
+    PAYMENT_CHOICES = (
+        ('pay_after_take', 'Оплата при отриманні'),
+        ('bank_card', 'Оплата на карту банка'),
+        ('bank_accoun', 'Безготівкой розрахунок(ФОП/ТОВ)'),
+        ('cash', 'Готівкою* (*лише за умови самовивозу з магазину)'),
 
-    phone = forms.CharField(max_length=20, widget=forms.TextInput(attrs={
-    'class': "form-control",
-    'type': "text",
-    'placeholder': "380991234567",
-    }))
-
-    city = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
-    'class': "form-control",
-    'type': "text",
-    'placeholder': "Ваш населенний пункт",
-    }))
-
-    postal_code = forms.CharField(max_length=20, widget=forms.TextInput(attrs={
-    'class': "form-control",
-    'type': "text",
-    'placeholder': "123",
-    }))
-
-    address = forms.CharField(max_length=250, widget=forms.TextInput(attrs={
-    'class': "form-control",
-    'type': "text",
-    'placeholder': "Ваша адреса - не обов'язково",
-    }))
-
-    message = forms.CharField(max_length=250, widget=forms.Textarea(attrs={
-    'class': "form-control",
-    'type': "text",
-    'placeholder': "Додаткова інформація - не обов'язково",
-    }))
+    )
+    payment_option = forms.ChoiceField(choices=PAYMENT_CHOICES, widget=forms.RadioSelect)
 
     class Meta:
         model = Order
-        fields = ['last_name', 'first_name', 'email', 'phone', 'city', 'postal_code', 'address', 'message']
+        fields = ['last_name', 'first_name', 'delivery_option', 'address', 'payment_option']

@@ -16,129 +16,72 @@
         </div>
     </div>
     <!-- Breadcrumb End -->
-
-    <!-- Checkout Start -->
-    <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="col-lg-8">
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Варіанти доставки</span></h5>
-
-                    <div class="form-group">
-                        <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" name="devivery" id="devivery_post">
-                            <label class="custom-control-label" for="devivery_post">Відправлення на відділення Нової Пошти</label>
-                            <div class="bg-light p-30 mb-5">
-                                <form method="post">
-                                {% csrf_token %}
-                                    <div class="row">
-                                        <div class="col-md-6 form-group">
-                                            <label>Прізвище</label>
-                                            {{ form.last_name }}
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label>Ім'я</label>
-                                            {{ form.first_name }}
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label>E-mail</label>
-                                            {{ form.email }}
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label>Контактний № мобільного тел. </label>
-                                            {{ form.phone }}
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label>Місто</label>
-                                            {{ form.city }}
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label>Номер відділення Нової пошти</label>
-                                            {{ form.postal_code }}
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label>Адреса</label>
-                                            {{ form.address }}
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label>Додаткова інформація</label>
-                                            {{ form.message }}
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-block btn-primary font-weight-bold py-3" type="submit">Підтвердити замовлення</button>
-                                </form>
-                            </div>
-                        </div>
+    <form method="post">
+        {% csrf_token %}
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-lg-8">
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Інформація про клієнта</span></h5>
+                    <div>
+                        <label for="{{ form.last_name.id_for_label }}">Прізвище:</label>
+                        {{ form.last_name }}
                     </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" name="devivery" id="shop">
-                            <label class="custom-control-label" for="shop">Самовивіз з магазина</label>
-                            <p>Адреса магазина и години роботи</p>
-                        </div>
+                    <div>
+                        <label for="{{ form.first_name.id_for_label }}">Ім'я:</label>
+                        {{ form.first_name }}
                     </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" name="devivery" id="address_devivery">
-                            <label class="custom-control-label" for="address_devivery">Доставка за адресою кур'эрською службою Нова пошта</label>
-                            <p>іфно для відправки/форма</p>
-                        </div>
-                    </div>
-            </div>
-
-            <div class="col-lg-4">
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Сума замовлення</span></h5>
-                <div class="bg-light p-30 mb-5">
-                    <div class="border-bottom">
-                        <h6 class="mb-3">Товари:</h6>
-                        {% for item in cart %}
-                            <div class="d-flex justify-content-between">
-                                <p>{{ item.product.name }}<br> розмір: {{ item.size }}<br> кількість: {{ item.quantity }}шт.</p>
-                                <p>{{ item.total_price }} UAH</p>
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Варіанти доставки</span></h5>
+                    <div>
+                        {% for radio in form.delivery_option %}
+                            <div>
+                                {{ radio }}
+                                <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
                             </div>
                         {% endfor %}
                     </div>
-
-                    <div class="pt-2">
-                        <div class="d-flex justify-content-between mt-2">
-                            <h5>Разом</h5>
-                            <h5>{{ cart.get_total_price }} UAH</h5>
-                        </div>
+                    <div id="address_field">
+                        <label for="{{ form.address.id_for_label }}">Адреса для адресної доставки:</label>
+                        {{ form.address }}
                     </div>
                 </div>
+                <div class="col-lg-4">
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Сума замовлення</span></h5>
+                    <div class="bg-light p-30 mb-5">
+                        <div class="border-bottom">
+                            <h6 class="mb-3">Товари:</h6>
+                            {% for item in cart %}
+                                <div class="d-flex justify-content-between">
+                                    <p>{{ item.product.name }}<br> розмір: {{ item.size }}<br> кількість: {{ item.quantity }}шт.</p>
+                                    <p>{{ item.total_price }} UAH</p>
+                                </div>
+                            {% endfor %}
+                        </div>
 
-                <div class="mb-5">
-                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Варіанти оплати</span></h5>
-                    <div class="bg-light p-30">
-                        <div class="form-group">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="pay_after_take">
-                                <label class="custom-control-label" for="pay_after_take">Оплата при отриманні</label>
+                        <div class="pt-2">
+                            <div class="d-flex justify-content-between mt-2">
+                                <h5>Разом</h5>
+                                <h5>{{ cart.get_total_price }} UAH</h5>
                             </div>
                         </div>
-                        <div class="form-group mb-4">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="bank_card">
-                                <label class="custom-control-label" for="bank_card">Оплата на карту банка</label>
-                            </div>
+                    </div>
+                    <div class="mb-5">
+                        <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Варіанти оплати</span></h5>
+                        <div class="bg-light p-30">
+                            {% for radio in form.payment_option %}
+                                <div>
+                                    {{ radio }}
+                                    <label for="{{ radio.id_for_label }}"></label>
+                                </div>
+                            {% endfor %}
                         </div>
-                        <div class="form-group mb-4">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="bank_account">
-                                <label class="custom-control-label" for="bank_account">Безготівкой розрахунок(ФОП/ТОВ)</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="cash">
-                                <label class="custom-control-label" for="cash">Готівкою* (*лише умови самовивозу з магазину)</label>
-                            </div>
-                        </div>
+                    </div>
+                    <div>
                         <button class="btn btn-block btn-primary font-weight-bold py-3" type="submit">Підтвердити замовлення</button>
                     </div>
                 </div>
+
             </div>
         </div>
-    </div>
-    <!-- Checkout End -->
+    </form>
 
 {% endblock %}

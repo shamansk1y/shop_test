@@ -12,8 +12,14 @@ class Order(models.Model):
     phone = models.CharField(max_length=20, validators=[phone_validator])
     city = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=20)
-    address = models.CharField(max_length=250, blank=True, null=True)
-    message = models.TextField(max_length=250, blank=True, null=True)
+    address = models.CharField(max_length=250, blank=True)
+    message = models.TextField(max_length=250, blank=True)
+    DELIVERY_CHOICES = (
+        ('pickup', 'Самовывоз'),
+        ('address', 'Адресная доставка'),
+    )
+    delivery_option = models.CharField(max_length=50, choices=DELIVERY_CHOICES)
+    payment_option = models.CharField(max_length=100, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
