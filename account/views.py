@@ -100,6 +100,10 @@ def remove_from_favorite(request, slug):
     Favorite.objects.filter(user=request.user, product=product).delete()
     return redirect('favorite_list')
 
+def remove_from_favorite_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    Favorite.objects.filter(user=request.user, product=product).delete()
+    return redirect('shop:product_detail', slug=slug)
 
 def favorite_list(request):
     favorites = Favorite.objects.filter(user=request.user)

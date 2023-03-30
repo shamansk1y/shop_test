@@ -123,14 +123,14 @@
 
                         {% if request.user.is_authenticated %}
                             {% if user_favorites.exists %}
-                                <form action="{% url 'remove_from_favorite' product.slug %}" method="post">
+                                <form action="{% url 'remove_from_favorite_detail' product.slug %}" method="post">
                                     {% csrf_token %}
-                                    <button type="submit">Удалить из избранного</button>
+                                    <button type="submit"><i class="fa fa-heart"></i></button>
                                 </form>
                             {% else %}
                                 <form action="{% url 'add_to_favorite' product.slug %}" method="post">
                                     {% csrf_token %}
-                                    <button type="submit">Добавить в избранное</button>
+                                <button type="submit"><i class="far fa-heart"></i></button>
                                 </form>
                             {% endif %}
 
