@@ -15,11 +15,18 @@ class Order(models.Model):
     address = models.CharField(max_length=250, blank=True)
     message = models.TextField(max_length=250, blank=True)
     DELIVERY_CHOICES = (
-        ('pickup', 'Самовывоз'),
-        ('address', 'Адресная доставка'),
+        ('devivery_post', 'Відправка на відділення/поштомат Нової Пошти'),
+        ('pickup', 'Самовивіз з магазину'),
+        ('address', "Адресна доставка кур'єрською служною Нова Пошта"),
     )
     delivery_option = models.CharField(max_length=50, choices=DELIVERY_CHOICES)
-    payment_option = models.CharField(max_length=100, blank=True)
+    PAYMENT_CHOICES = (
+        ('pay_after_take', 'Оплата при отриманні'),
+        ('bank_card', 'Оплата на карту банка'),
+        ('bank_accoun', 'Безготівкой розрахунок(ФОП/ТОВ)'),
+        ('cash', 'Готівкою* (*лише за умови самовивозу з магазину)'),
+    )
+    payment_option = models.CharField(max_length=50, choices=PAYMENT_CHOICES)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

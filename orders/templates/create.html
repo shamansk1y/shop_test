@@ -22,34 +22,36 @@
             <div class="row px-xl-5">
                 <div class="col-lg-8">
                     <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Інформація про клієнта</span></h5>
-                    <div>
-                        <label for="{{ form.last_name.id_for_label }}">Прізвище:</label>
-                        {{ form.last_name }}
-                    </div>
-                    <div>
-                        <label for="{{ form.first_name.id_for_label }}">Ім'я:</label>
-                        {{ form.first_name }}
-                    </div>
-                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Варіанти доставки</span></h5>
-                    <div>
-                        {% for radio in form.delivery_option %}
-                            <div>
-                                {{ radio }}
-                                <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div id="address_field">
-                        <label for="{{ form.address.id_for_label }}">Адреса для адресної доставки:</label>
-                        {{ form.address }}
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Прізвище:</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Ім'я:</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>E-mail</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Контактний № мобільного тел. </label>
+                            {{ form.phone }}
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Додаткова інформація</label>
+                            {{ form.message }}
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Сума замовлення</span></h5>
                     <div class="bg-light p-30 mb-5">
                         <div class="border-bottom">
-                            <h6 class="mb-3">Товари:</h6>
+                            <h5 class="mb-3">Товари:</h5>
                             {% for item in cart %}
+                                <hr>
                                 <div class="d-flex justify-content-between">
                                     <p>{{ item.product.name }}<br> розмір: {{ item.size }}<br> кількість: {{ item.quantity }}шт.</p>
                                     <p>{{ item.total_price }} UAH</p>
@@ -65,12 +67,33 @@
                         </div>
                     </div>
                     <div class="mb-5">
+                        <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Варіанти доставки</span></h5>
+                        <div class="bg-light p-30">
+                            {{ form.delivery_option.0 }}
+                            <label>Місто/смт/село</label>
+                            {{ form.city }}
+                            <label>Номер відділення Нової пошти/Поштомат №</label>
+                            {{ form.postal_code }}
+                            <hr>
+                        </div>
+                        <div class="bg-light p-30">
+                            {{ form.delivery_option.1 }}
+                            <hr>
+                        </div>
+                        <div class="bg-light p-30">
+                            {{ form.delivery_option.2 }}
+                            <label>Адреса для адресної доставки:</label>
+                            {{ form.address }}
+                        </div>
+                    </div>
+                    <div class="mb-5">
                         <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Варіанти оплати</span></h5>
                         <div class="bg-light p-30">
                             {% for radio in form.payment_option %}
                                 <div>
                                     {{ radio }}
                                     <label for="{{ radio.id_for_label }}"></label>
+                                    <hr>
                                 </div>
                             {% endfor %}
                         </div>
