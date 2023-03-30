@@ -227,7 +227,7 @@ class Product(models.Model):
         ('Ж', 'Жіноча'),
         ('У', 'Унісекс'),
         ]
-    characteristics_gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
+    characteristics_gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, default='У')
     AGE_CHOICES = [
         ('Д', 'Дорослий'),
         ('К', 'Дитячий'),
