@@ -23,7 +23,10 @@ class Cart:
         """
         key = str(product.id) + '-' + str(size) if size else str(product.id)
         if key not in self.cart:
-            self.cart[key] = {'quantity': 0, 'price': str(product.price), 'size': size}
+            if product.discounted_price:
+                self.cart[key] = {'quantity': 0, 'price': str(product.discounted_price), 'size': size}
+            else:
+                self.cart[key] = {'quantity': 0, 'price': str(product.price), 'size': size}
         if update_quantity:
             self.cart[key]['quantity'] = quantity
         else:
