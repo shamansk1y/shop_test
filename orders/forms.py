@@ -29,13 +29,13 @@ class OrderCreateForm(forms.ModelForm):
     city = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={
     'class': "form-control",
     'type': "text",
-    'placeholder': "Ваш населенний пункт",
+    'placeholder': "Місто/смт/село",
     }))
 
     postal_code = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={
     'class': "form-control",
     'type': "text",
-    'placeholder': "123",
+    'placeholder': "Номер відділення Нової пошти/Поштомат №",
     }))
 
     address = forms.CharField(max_length=250, required=False, widget=forms.TextInput(attrs={

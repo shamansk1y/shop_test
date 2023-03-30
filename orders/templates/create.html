@@ -68,22 +68,20 @@
                     </div>
                     <div class="mb-5">
                         <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Варіанти доставки</span></h5>
-                        <div class="bg-light p-30">
-                            {{ form.delivery_option.0 }}
-                            <label>Місто/смт/село</label>
-                            {{ form.city }}
-                            <label>Номер відділення Нової пошти/Поштомат №</label>
-                            {{ form.postal_code }}
-                            <hr>
-                        </div>
-                        <div class="bg-light p-30">
-                            {{ form.delivery_option.1 }}
-                            <hr>
-                        </div>
-                        <div class="bg-light p-30">
-                            {{ form.delivery_option.2 }}
-                            <label>Адреса для адресної доставки:</label>
-                            {{ form.address }}
+                        <div class="bg-light mb-5">
+                            <div class="bg-light p-30 border-bottom">
+                                {{ form.delivery_option.0 }}<br>
+                                {{ form.city }}
+                                {{ form.postal_code }}
+                            </div>
+                            <div class="bg-light p-30 border-bottom">
+                                {{ form.delivery_option.1 }}
+                            </div>
+                            <div class="bg-light p-30 border-bottom">
+                                {{ form.delivery_option.2 }}<br>
+                                {{ form.city }}
+                                {{ form.address }}
+                            </div>
                         </div>
                     </div>
                     <div class="mb-5">
