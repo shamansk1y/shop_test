@@ -52,7 +52,7 @@ def product_list(request, category_slug=None):
 
     # filter products by selected sizes
     if size_filters:
-        products = products.filter(sizes__id__in=size_filters)
+        products = products.filter(sizes__id__in=size_filters).distinct()
 
     # filter products by selected price range
     price_filters = request.GET.getlist('price_filter')
