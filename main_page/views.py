@@ -1,11 +1,12 @@
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from cart.cart import Cart
 from main_page.context_data import get_page_context, get_common_context
 from main_page.forms import ContactUsForm, SubscriptionForm
 from main_page.models import Subscription, ContactUs
 from orders.models import OrderItem, Order
-from shop.models import Category, Product
+from shop.models import Category, Product, Size, Manufacturer
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 def is_manager(user):
@@ -69,6 +70,33 @@ def sub_category_list(request, slug):
         cat_products = Product.objects.filter(category=cat).order_by('-price')
     else:
         cat_products = Product.objects.filter(category=cat)
+    manufacturer_filters = request.GET.getlist('manufacturer_filter')
+    size_filters = request.GET.getlist('size_filter')
+
+    price_ranges = [
+        {'id': '1-500', 'name': 'від 1 до 500 UAH', 'min': 1, 'max': 500},
+        {'id': '501-1000', 'name': 'від 501 UAH до 1000 UAH', 'min': 501, 'max': 1000},
+        {'id': '1001-1500', 'name': 'від 1001 UAH до 1500 UAH', 'min': 1001, 'max': 1500},
+        {'id': '1501-2000', 'name': 'від 1501 UAH до 2000 UAH', 'min': 1501, 'max': 2000},
+        {'id': '2001-1999', 'name': 'від 2001 та вище', 'min': 2001, 'max': 19999},
+    ]
+    if manufacturer_filters:
+        cat_products = cat_products.filter(manufacturer__id__in=manufacturer_filters)
+    if size_filters:
+        cat_products = cat_products.filter(sizes__id__in=size_filters).distinct()
+    price_filters = request.GET.getlist('price_filter')
+    if price_filters:
+        price_query = Q()
+        for price_filter in price_filters:
+            min_price, max_price = price_filter.split('-')
+            if max_price:
+                price_query |= Q(price__gte=min_price, price__lte=max_price)
+            else:
+                price_query |= Q(price__gte=min_price)
+        cat_products = cat_products.filter(price_query)
+
+    sizes = Size.objects.filter(products__in=cat_products).distinct()
+    manufacturers = Manufacturer.objects.filter(product__in=cat_products).distinct()
 
     paginator = Paginator(cat_products, 24)
     page_number = request.GET.get('page')
@@ -80,6 +108,12 @@ def sub_category_list(request, slug):
         'cat_products': cat_products,
         'page_obj': page_obj,
         'sort_by': sort_by,
+        'manufacturers': manufacturers,
+        'sizes': sizes,
+        'manufacturer_filters': manufacturer_filters,
+        'size_filters': size_filters,
+        'price_filters': price_filters,
+        'price_ranges': price_ranges,
     }
     context_req = get_page_context(request)
     context_data = get_common_context()
