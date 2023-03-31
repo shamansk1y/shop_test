@@ -14,7 +14,6 @@ def product_list(request, category_slug=None):
     cart = Cart(request)
     sort = request.GET.get('sort', '')  # get sorting parameter
     products = Product.objects.filter(available=True)  # get all products
-
     # sort products
     if sort == 'price_desc':
         products = products.order_by('-price')
@@ -27,12 +26,13 @@ def product_list(request, category_slug=None):
 
     # get price ranges
     price_ranges = [
-        {'name': 'від 1 до 500 UAH', 'min': 1, 'max': 500},
-        {'name': 'від 501 UAH до 1000 UAH', 'min': 501, 'max': 1000},
-        {'name': 'від 1001 UAH до 1500 UAH', 'min': 1001, 'max': 1500},
-        {'name': 'від 1501 UAH до 2000 UAH', 'min': 1501, 'max': 2000},
-        {'name': 'від 2001 та вище', 'min': 2001, 'max': 19999},
+        {'id': '1-500', 'name': 'від 1 до 500 UAH', 'min': 1, 'max': 500},
+        {'id': '501-1000','name': 'від 501 UAH до 1000 UAH', 'min': 501, 'max': 1000},
+        {'id': '1001-1500','name': 'від 1001 UAH до 1500 UAH', 'min': 1001, 'max': 1500},
+        {'id': '1501-2000','name': 'від 1501 UAH до 2000 UAH', 'min': 1501, 'max': 2000},
+        {'id': '2001-1999','name': 'від 2001 та вище', 'min': 2001, 'max': 19999},
     ]
+
 
     # get manufacturers
     manufacturers = Manufacturer.objects.all()
