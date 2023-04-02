@@ -3,6 +3,7 @@ from io import BytesIO
 from ckeditor.fields import RichTextField
 from django.core.files.base import ContentFile
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from django.utils.text import slugify
 from main_page.utils import get_file_name
@@ -366,8 +367,10 @@ class Coupon(models.Model):
     def can_be_used(self):
         return self.status and self.start_date <= timezone.now() <= self.end_date and self.uses_remaining > 0
 
-    def is_valid_product(self, product):
-        if self.products.exists() and product not in self.products.all():
+    def is_valid_product(self, product, size=None):
+        key = str(product.id) + '-' + str(size) if size else str(product.id)
+        if self.products.exists() and not self.products.filter(
+                Q(id=product.id) & Q(productvariation__size=size)).exists():
             return False
         if self.exclude_manufacturers.exists() and product.manufacturer in self.exclude_manufacturers.all():
             return False
@@ -375,16 +378,6 @@ class Coupon(models.Model):
             return False
         return True
 
-    def apply_discount(self, cart):
-        if not self.can_be_used():
-            return
-        for item in cart:
-            if self.is_valid_product(item['product']):
-                item['total_price'] -= item['price'] * self.discount
-        self.uses_remaining -= 1
-        if self.uses_remaining == 0:
-            self.status = False
-        self.save()
 
     class Meta:
         ordering = ['-end_date']

@@ -65,7 +65,7 @@ def product_list(request, category_slug=None):
                 price_query |= Q(price__gte=min_price)
         products = products.filter(price_query)
 
-    count = int(request.GET.get('count', 24))
+    count = int(request.GET.get('count', 24) or 24)
     paginator = Paginator(products, count)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

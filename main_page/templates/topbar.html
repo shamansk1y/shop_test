@@ -13,35 +13,19 @@
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">My Account</button>
+                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">Особистий кабінет</button>
                         <div class="dropdown-menu dropdown-menu-right">
                         {% if not user_auth %}
                             <a class="dropdown-item" href="{% url 'login_view' %}">Увійти</a>
                             <a class="dropdown-item" href="{% url 'registration_view' %}">Зареєструватись</a>
                         {% else %}
                             <a class="dropdown-item" href="{% url 'order_history' %}">Історія замовлень</a>
-                            <a class="dropdown-item" href="{% url 'main_page:contacts' %}">Контактна інформація</a>
                             <a class="dropdown-item" href="{% url 'favorite_list' %}">Вибрані товари</a>
                             <a class="dropdown-item" href="{% url 'logout_view' %}">Вихід</a>
                         {% endif %}
                         </div>
                     </div>
 
-                    <div class="btn-group mx-2">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">UAH</button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">USD</button>
-                            <button class="dropdown-item" type="button">GBP</button>
-                            <button class="dropdown-item" type="button">EUR</button>
-                        </div>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">UA</button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">EN</button>
-                            <button class="dropdown-item" type="button">RU</button>
-                        </div>
-                    </div>
                 </div>
                 <div class="d-inline-flex align-items-center d-block d-lg-none">
                     {% if request.user.is_authenticated %}

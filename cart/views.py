@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_GET
 from main_page.context_data import get_common_context, get_page_context
-from shop.models import Product
+from shop.models import Product, Coupon
 from .cart import Cart
 
 

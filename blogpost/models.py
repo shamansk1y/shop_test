@@ -1,13 +1,15 @@
 from django.db import models
 from django.urls import reverse
 from ckeditor.fields import RichTextField
+
+from main_page.utils import get_file_name_id
 from shop.models import Product
 
 class Blog(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     is_visible = models.BooleanField(default=True)
-    image = models.ImageField(upload_to='blog/%Y/%m/', null=True, blank=True)
+    image = models.ImageField(upload_to=get_file_name_id)
     position = models.IntegerField(default=0)
     content = RichTextField()
     meta_title = models.CharField(max_length=255, null=True, blank=True)
