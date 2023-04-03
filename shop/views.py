@@ -91,7 +91,10 @@ def product_list(request, category_slug=None):
 def product_detail(request, slug):
     cart = Cart(request)
     product = get_object_or_404(Product, slug=slug, available=True)
-    favorites = Favorite.objects.filter(user=request.user)
+    if request.user.is_authenticated:
+        favorites = Favorite.objects.filter(user=request.user)
+    else:
+        favorites = None
     user_favorites = []
     if request.user.is_authenticated:
         user_favorites = Favorite.objects.filter(user=request.user, product=product)
