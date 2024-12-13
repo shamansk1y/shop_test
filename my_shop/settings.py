@@ -98,9 +98,15 @@ DATABASES = {
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
         'PORT': DB_PORT,
+        'OPTIONS': {
+        'sql_mode': 'STRICT_TRANS_TABLES',
+        },
     }
 }
 
+import dj_database_url
+db = dj_database_url.config()
+DATABASES['default'].update(db)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
